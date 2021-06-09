@@ -1,7 +1,9 @@
-﻿using Newtonsoft.Json;
-
-namespace Info.Blockchain.API.Models
+﻿namespace Info.Blockchain.API.Models
 {
+	using Newtonsoft.Json;
+
+	using System.ComponentModel.DataAnnotations;
+
 	/// <summary>
 	/// This class is used in the response of the `GetTicker` method in the `ExchangeRates` class.
 	/// </summary>
@@ -11,30 +13,40 @@ namespace Info.Blockchain.API.Models
 		/// Current buy price
 		/// </summary>
 		[JsonProperty("buy", Required = Required.Always)]
-		public double Buy { get; private set; }
-
-		/// <summary>
-		/// Current sell price
-		/// </summary>
-		[JsonProperty("sell", Required = Required.Always)]
-		public double Sell { get; private set; }
+		[Required]
+		[System.Text.Json.Serialization.JsonPropertyName("buy")]
+		public double Buy { get; init; }
 
 		/// <summary>
 		/// Most recent market price
 		/// </summary>
 		[JsonProperty("last", Required = Required.Always)]
-		public double Last { get; private set; }
+		[Required]
+		[System.Text.Json.Serialization.JsonPropertyName("last")]
+		public double Last { get; init; }
 
 		/// <summary>
 		/// 15 minutes delayed market price
 		/// </summary>
 		[JsonProperty("15m", Required = Required.Always)]
-		public double Price15M { get; private set; }
+		[Required]
+		[System.Text.Json.Serialization.JsonPropertyName("15m")]
+		public double Price15M { get; init; }
+
+		/// <summary>
+		/// Current sell price
+		/// </summary>
+		[JsonProperty("sell", Required = Required.Always)]
+		[Required]
+		[System.Text.Json.Serialization.JsonPropertyName("sell")]
+		public double Sell { get; init; }
 
 		/// <summary>
 		/// Currency symbol
 		/// </summary>
 		[JsonProperty("symbol", Required = Required.Always)]
-		public string Symbol { get; private set; }
+		[Required]
+		[System.Text.Json.Serialization.JsonPropertyName("symbol")]
+		public string Symbol { get; init; } = string.Empty;
 	}
 }

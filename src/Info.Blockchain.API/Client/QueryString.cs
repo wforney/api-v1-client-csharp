@@ -1,36 +1,56 @@
-using System.Collections.Generic;
-using System.Linq;
-
-namespace Info.Blockchain.API.Client
+﻿namespace Info.Blockchain.API.Client
 {
-    public class QueryString
-    {
-        private readonly IDictionary<string, string> _queryString;
+	using System.Collections.Generic;
+	using System.Linq;
 
-        public QueryString()
-        {
-            _queryString = new Dictionary<string, string>();
-        }
+	/// <summary>
+	/// The query string class.
+	/// </summary>
+	public class QueryString
+	{
+		/// <summary>
+		/// The query string
+		/// </summary>
+		private readonly IDictionary<string, string> queryString;
 
-        public void Add(string key, string value)
-        {
-            if (_queryString.ContainsKey(key))
-            {
-                throw new ClientApiException($"Query string already has a value for {key}");
-            }
-            _queryString[key] = value;
-        }
+		/// <summary>
+		/// Initializes a new instance of the <see cref="QueryString" /> class.
+		/// </summary>
+		public QueryString() => this.queryString = new Dictionary<string, string>();
 
-        public int Count => _queryString.Count;
+		/// <summary>
+		/// Gets the count.
+		/// </summary>
+		/// <value>The count.</value>
+		public int Count => this.queryString.Count;
 
-        public void AddOrUpdate(string key, string value)
-        {
-            _queryString[key] = value;
-        }
+		/// <summary>
+		/// Adds the specified key.
+		/// </summary>
+		/// <param name="key">The key.</param>
+		/// <param name="value">The value.</param>
+		/// <exception cref="ClientApiException">Query string already has a value for {key}</exception>
+		public void Add(string key, string value)
+		{
+			if (this.queryString.ContainsKey(key))
+			{
+				throw new ClientApiException($"Query string already has a value for {key}");
+			}
 
-        public override string ToString()
-        {
-            return "?" + string.Join("&", _queryString.Select(kv => $"{kv.Key}={kv.Value}"));
-        }
-    }
+			this.queryString[key] = value;
+		}
+
+		/// <summary>
+		/// Adds the or update.
+		/// </summary>
+		/// <param name="key">The key.</param>
+		/// <param name="value">The value.</param>
+		public void AddOrUpdate(string key, string value) => this.queryString[key] = value;
+
+		/// <summary>
+		/// Returns a <see cref="string" /> that represents this instance.
+		/// </summary>
+		/// <returns>A <see cref="string" /> that represents this instance.</returns>
+		public override string ToString() => $"?{string.Join("&", this.queryString.Select(kv => $"{kv.Key}={kv.Value}"))}";
+	}
 }

@@ -1,0 +1,2094 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>BlockchainAPI</name>
+    </assembly>
+    <members>
+        <member name="T:Info.Blockchain.API.BlockExplorer.BlockExplorer">
+            <summary>
+            The BlockExplorer class reflects the functionality documented at
+            https://blockchain.info/api/blockchain_api. It can be used to query the block chain, fetch
+            block, transaction and address data, get unspent outputs for an address etc.
+            </summary>
+        </member>
+        <member name="F:Info.Blockchain.API.BlockExplorer.BlockExplorer.DefaultUnspentTransactionsPerRequest">
+            <summary>
+            The default unspent transactions per request
+            </summary>
+        </member>
+        <member name="F:Info.Blockchain.API.BlockExplorer.BlockExplorer.MaxTransactionsPerMultiRequest">
+            <summary>
+            The maximum transactions per multi request
+            </summary>
+        </member>
+        <member name="F:Info.Blockchain.API.BlockExplorer.BlockExplorer.MaxTransactionsPerRequest">
+            <summary>
+            The maximum transactions per request
+            </summary>
+        </member>
+        <member name="F:Info.Blockchain.API.BlockExplorer.BlockExplorer.httpClient">
+            <summary>
+            The HTTP client
+            </summary>
+        </member>
+        <member name="M:Info.Blockchain.API.BlockExplorer.BlockExplorer.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Info.Blockchain.API.BlockExplorer.BlockExplorer" /> class.
+            </summary>
+        </member>
+        <member name="M:Info.Blockchain.API.BlockExplorer.BlockExplorer.#ctor(Info.Blockchain.API.Client.IHttpClient)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Info.Blockchain.API.BlockExplorer.BlockExplorer" /> class.
+            </summary>
+            <param name="httpClient">The HTTP client.</param>
+        </member>
+        <member name="M:Info.Blockchain.API.BlockExplorer.BlockExplorer.GetBase58AddressAsync(System.String,System.Int32,System.Int32,Info.Blockchain.API.BlockExplorer.FilterType)">
+            <summary>
+            Gets data for a single Base58Check address asynchronously.
+            </summary>
+            <param name="address">Base58Check address string</param>
+            <param name="limit">Max amount of transactions to retrieve (Max 50)</param>
+            <param name="offset">Number of transactions to skip</param>
+            <param name="filter">Filter type to use for query</param>
+            <returns>An instance of the Address class</returns>
+            <exception cref="T:Info.Blockchain.API.Client.ServerApiException">If the server returns an error</exception>
+        </member>
+        <member name="M:Info.Blockchain.API.BlockExplorer.BlockExplorer.GetBlockByHashAsync(System.String)">
+            <summary>
+            Gets a single block based on a block hash.
+            </summary>
+            <param name="hash">Block hash</param>
+            <returns>An instance of the Block class</returns>
+            <exception cref="T:Info.Blockchain.API.Client.ServerApiException">If the server returns an error</exception>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:Info.Blockchain.API.BlockExplorer.BlockExplorer.GetBlockByIndexAsync(System.Int64)">
+            <summary>
+            Deprecated. Gets a single block based on a block index.
+            </summary>
+            <param name="index">Block index</param>
+            <returns>An instance of the Block class</returns>
+            <exception cref="T:Info.Blockchain.API.Client.ServerApiException">If the server returns an error</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+        </member>
+        <member name="M:Info.Blockchain.API.BlockExplorer.BlockExplorer.GetBlocksAtHeightAsync(System.Int64)">
+            <summary>
+            Gets a list of blocks at the specified height. Normally, only one block will be
+            returned, but in case of a chain fork, multiple blocks may be present.
+            </summary>
+            <param name="height">Block height</param>
+            <returns>A list of blocks at the specified height</returns>
+            <exception cref="T:Info.Blockchain.API.Client.ServerApiException">If the server returns an error</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+        </member>
+        <member name="M:Info.Blockchain.API.BlockExplorer.BlockExplorer.GetBlocksByDateTimeAsync(System.DateTime)">
+            <summary>
+            Gets a list of blocks mined on a specific day.
+            </summary>
+            <param name="dateTime">
+            DateTime that falls between 00:00 UTC and 23:59 UTC of the desired day.
+            </param>
+            <returns>A list of SimpleBlock objects</returns>
+            <exception cref="T:Info.Blockchain.API.Client.ServerApiException">If the server returns an error</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+        </member>
+        <member name="M:Info.Blockchain.API.BlockExplorer.BlockExplorer.GetBlocksByPoolNameAsync(System.String)">
+            <summary>
+            Gets a list of recent blocks by a specific mining pool (Max 101). No input returns all
+            blocks mined today since midnight.
+            </summary>
+            <param name="poolName">Name of mining pool</param>
+            <returns>A list of SimpleBlock objects</returns>
+            <exception cref="T:Info.Blockchain.API.Client.ServerApiException">If the server returns an error</exception>
+        </member>
+        <member name="M:Info.Blockchain.API.BlockExplorer.BlockExplorer.GetBlocksByTimestampAsync(System.Int64)">
+            <summary>
+            Gets a list of blocks mined on a specific day.
+            </summary>
+            <param name="unixMillis">
+            Unix timestamp in milliseconds that falls between 00:00 UTC and 23:59 UTC of the desired day.
+            </param>
+            <returns>A list of SimpleBlock objects</returns>
+            <exception cref="T:Info.Blockchain.API.Client.ServerApiException">If the server returns an error</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+        </member>
+        <member name="M:Info.Blockchain.API.BlockExplorer.BlockExplorer.GetHash160AddressAsync(System.String,System.Int32,System.Int32,Info.Blockchain.API.BlockExplorer.FilterType)">
+            <summary>
+            Gets data for a single Hash160 address asynchronously.
+            </summary>
+            <param name="address">Hash160 address string</param>
+            <param name="limit">Max amount of transactions to retrieve (Max 50)</param>
+            <param name="offset">Number of transactions to skip</param>
+            <param name="filter">Filter type to use for query</param>
+            <returns>An instance of the Address class</returns>
+            <exception cref="T:Info.Blockchain.API.Client.ServerApiException">If the server returns an error</exception>
+        </member>
+        <member name="M:Info.Blockchain.API.BlockExplorer.BlockExplorer.GetLatestBlockAsync">
+            <summary>
+            Gets the latest block on the main chain (simplified representation).
+            </summary>
+            <returns>An instance of the LatestBlock class</returns>
+            <exception cref="T:Info.Blockchain.API.Client.ServerApiException">If the server returns an error</exception>
+        </member>
+        <member name="M:Info.Blockchain.API.BlockExplorer.BlockExplorer.GetMultiAddressAsync(System.Collections.Generic.IEnumerable{System.String},System.Int32,System.Int32,Info.Blockchain.API.BlockExplorer.FilterType)">
+            <summary>
+            Gets data for multiple Base58Check and / or Xpub address asynchronously.
+            </summary>
+            <param name="addressList">IEnumerable of Base58Check and / or xPub address strings</param>
+            <param name="limit">Max amount of transactions to retrieve (Max 50)</param>
+            <param name="offset">Number of transactions to skip</param>
+            <param name="filter">Filter type to use for query</param>
+            <returns>An instance of the Address class</returns>
+            <exception cref="T:Info.Blockchain.API.Client.ServerApiException">If the server returns an error</exception>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <exception cref="T:System.ArgumentException"></exception>
+        </member>
+        <member name="M:Info.Blockchain.API.BlockExplorer.BlockExplorer.GetTransactionByHashAsync(System.String)">
+            <summary>
+            Gets a single transaction based on a transaction hash.
+            </summary>
+            <param name="hash">Transaction hash</param>
+            <returns>An instance of the Transaction class</returns>
+            <exception cref="T:Info.Blockchain.API.Client.ServerApiException">If the server returns an error</exception>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:Info.Blockchain.API.BlockExplorer.BlockExplorer.GetTransactionByIndexAsync(System.Int64)">
+            <summary>
+            Deprecated. Gets a single transaction based on a transaction index.
+            </summary>
+            <param name="index">Transaction index</param>
+            <returns>An instance of the Transaction class</returns>
+            <exception cref="T:Info.Blockchain.API.Client.ServerApiException">If the server returns an error</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+        </member>
+        <member name="M:Info.Blockchain.API.BlockExplorer.BlockExplorer.GetUnconfirmedTransactionsAsync">
+            <summary>
+            Gets a list of the last 10 unconfirmed transactions.
+            </summary>
+            <returns>A list of unconfirmed Transaction objects</returns>
+            <exception cref="T:Info.Blockchain.API.Client.ServerApiException">If the server returns an error</exception>
+        </member>
+        <member name="M:Info.Blockchain.API.BlockExplorer.BlockExplorer.GetUnspentOutputsAsync(System.Collections.Generic.IEnumerable{System.String},System.Int32,System.Int32)">
+            <summary>
+            Gets unspent outputs for a one or more Base58Check and / or xPub addresses.
+            </summary>
+            <param name="addressList">IEnumerable of Base58check and / or xPub address strings</param>
+            <param name="limit">Max amount of unspent outputs to receive (Max 50)</param>
+            <param name="confirmations">Minimum number of confirmations to receive (Default 0)</param>
+            <returns>A list of unspent outputs for the specified address</returns>
+            <exception cref="T:Info.Blockchain.API.Client.ServerApiException">If the server returns an error</exception>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <exception cref="T:System.ArgumentException"></exception>
+        </member>
+        <member name="M:Info.Blockchain.API.BlockExplorer.BlockExplorer.GetXpub(System.String,System.Int32,System.Int32,Info.Blockchain.API.BlockExplorer.FilterType)">
+            <summary>
+            Returns xpub summary on a xpub provided, with its overall balance and its transactions.
+            </summary>
+            <param name="xpub">Xpub address string</param>
+            <param name="limit">Max amount of transactions to retrieve (Max 50)</param>
+            <param name="offset">Number of transactions to skip</param>
+            <param name="filter">Filter type to use for query</param>
+            <returns>Xpub model</returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <exception cref="T:System.ArgumentException"></exception>
+        </member>
+        <member name="M:Info.Blockchain.API.BlockExplorer.BlockExplorer.GetAddressAsync(System.String,System.Int32,System.Int32,Info.Blockchain.API.BlockExplorer.FilterType)">
+            <summary>
+            get address as an asynchronous operation.
+            </summary>
+            <param name="address">The address.</param>
+            <param name="limit">The limit.</param>
+            <param name="offset">The offset.</param>
+            <param name="ft">The ft.</param>
+            <returns>Address.</returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            limit - transaction limit must be greater than 0 and smaller than " +
+            MAX_TRANSACTIONS_PER_REQUEST or offset - offset must be equal to or greater than 0
+            </exception>
+            <exception cref="T:System.ArgumentException">address - address provided is invalid</exception>
+        </member>
+        <member name="M:Info.Blockchain.API.BlockExplorer.BlockExplorer.GetBlockAsync(System.String)">
+            <summary>
+            get block as an asynchronous operation.
+            </summary>
+            <param name="hashOrIndex">Index of the hash or.</param>
+            <returns>Block.</returns>
+            <exception cref="T:System.ArgumentNullException">hashOrIndex</exception>
+        </member>
+        <member name="M:Info.Blockchain.API.BlockExplorer.BlockExplorer.GetBlocksAsync(System.String)">
+            <summary>
+            Gets a list of recent blocks by a specific mining pool or up to a specified timestamp.
+            If neither is provided returns all blocks mined since midnight.
+            </summary>
+            <param name="poolNameOrTimestamp">
+            Name of the mining pool or Unix timestamp in milliseconds that falls between 00:00 UTC
+            and 23:59 UTC of the desired day.
+            </param>
+            <returns>A list of SimpleBlock objects</returns>
+            <exception cref="T:Info.Blockchain.API.Client.ServerApiException">If the server returns an error</exception>
+        </member>
+        <member name="M:Info.Blockchain.API.BlockExplorer.BlockExplorer.GetTransactionAsync(System.String)">
+            <summary>
+            get transaction as an asynchronous operation.
+            </summary>
+            <param name="hashOrIndex">Index of the hash or.</param>
+            <returns>Transaction.</returns>
+            <exception cref="T:System.ArgumentNullException">hashOrIndex</exception>
+        </member>
+        <member name="T:Info.Blockchain.API.BlockExplorer.FilterType">
+            <summary>
+            The filter type enumeration.
+            </summary>
+        </member>
+        <member name="F:Info.Blockchain.API.BlockExplorer.FilterType.All">
+            <summary>
+            All
+            </summary>
+        </member>
+        <member name="F:Info.Blockchain.API.BlockExplorer.FilterType.ConfirmedOnly">
+            <summary>
+            The confirmed only
+            </summary>
+        </member>
+        <member name="F:Info.Blockchain.API.BlockExplorer.FilterType.RemoveUnspendable">
+            <summary>
+            The remove unspendable
+            </summary>
+        </member>
+        <member name="T:Info.Blockchain.API.Client.ApiExceptionBase">
+            <summary>
+            The base exception for the BlockChain Api. Its only use is to detect if the exception came
+            from the api rather that another source
+            </summary>
+        </member>
+        <member name="M:Info.Blockchain.API.Client.ApiExceptionBase.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Info.Blockchain.API.Client.ApiExceptionBase" /> class.
+            </summary>
+        </member>
+        <member name="M:Info.Blockchain.API.Client.ApiExceptionBase.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Info.Blockchain.API.Client.ApiExceptionBase" /> class.
+            </summary>
+            <param name="message">The message that describes the error.</param>
+        </member>
+        <member name="M:Info.Blockchain.API.Client.ApiExceptionBase.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Info.Blockchain.API.Client.ApiExceptionBase" /> class.
+            </summary>
+            <param name="message">The error message that explains the reason for the exception.</param>
+            <param name="innerException">
+            The exception that is the cause of the current exception, or a null reference ( <see
+            langword="Nothing" /> in Visual Basic) if no inner exception is specified.
+            </param>
+        </member>
+        <member name="T:Info.Blockchain.API.Client.BlockchainApiHelper">
+            <summary>
+            The blockchain API helper class. Implements the <see cref="T:System.IDisposable" />.
+            </summary>
+            <seealso cref="T:System.IDisposable" />
+        </member>
+        <member name="F:Info.Blockchain.API.Client.BlockchainApiHelper.blockExplorer">
+            <summary>
+            The block explorer
+            </summary>
+        </member>
+        <member name="F:Info.Blockchain.API.Client.BlockchainApiHelper.exchangeRateExplorer">
+            <summary>
+            The exchange rate explorer
+            </summary>
+        </member>
+        <member name="F:Info.Blockchain.API.Client.BlockchainApiHelper.statisticsExplorer">
+            <summary>
+            The statistics explorer
+            </summary>
+        </member>
+        <member name="F:Info.Blockchain.API.Client.BlockchainApiHelper.transactionBroadcaster">
+            <summary>
+            The transaction broadcaster
+            </summary>
+        </member>
+        <member name="F:Info.Blockchain.API.Client.BlockchainApiHelper.walletCreator">
+            <summary>
+            The wallet creator
+            </summary>
+        </member>
+        <member name="F:Info.Blockchain.API.Client.BlockchainApiHelper.baseHttpClient">
+            <summary>
+            The base HTTP client
+            </summary>
+        </member>
+        <member name="F:Info.Blockchain.API.Client.BlockchainApiHelper.serviceHttpClient">
+            <summary>
+            The service HTTP client
+            </summary>
+        </member>
+        <member name="F:Info.Blockchain.API.Client.BlockchainApiHelper.disposedValue">
+            <summary>
+            The disposed value
+            </summary>
+        </member>
+        <member name="M:Info.Blockchain.API.Client.BlockchainApiHelper.#ctor(System.String,Info.Blockchain.API.Client.IHttpClient,System.String,Info.Blockchain.API.Client.IHttpClient)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Info.Blockchain.API.Client.BlockchainApiHelper" /> class.
+            </summary>
+            <param name="apiCode">The API code.</param>
+            <param name="baseHttpClient">The base HTTP client.</param>
+            <param name="serviceUrl">The service URL.</param>
+            <param name="serviceHttpClient">The service HTTP client.</param>
+        </member>
+        <member name="M:Info.Blockchain.API.Client.BlockchainApiHelper.Finalize">
+            <summary>
+            Finalizes this instance.
+            </summary>
+        </member>
+        <member name="M:Info.Blockchain.API.Client.BlockchainApiHelper.CreateWalletCreator">
+            <summary>
+            Creates the wallet creator.
+            </summary>
+            <returns>Info.Blockchain.API.Wallet.WalletCreator.</returns>
+        </member>
+        <member name="M:Info.Blockchain.API.Client.BlockchainApiHelper.Dispose">
+            <inheritdoc />
+        </member>
+        <member name="M:Info.Blockchain.API.Client.BlockchainApiHelper.InitializeWallet(System.String,System.String,System.String)">
+            <summary>
+            Creates an instance of 'WalletHelper' based on the identifier allowing the use of that wallet
+            </summary>
+            <param name="identifier">Wallet identifier (GUID)</param>
+            <param name="password">Decryption password</param>
+            <param name="secondPassword">Second password</param>
+            <exception cref="T:Info.Blockchain.API.Client.ClientApiException"></exception>
+        </member>
+        <member name="M:Info.Blockchain.API.Client.BlockchainApiHelper.Dispose(System.Boolean)">
+            <inheritdoc />
+        </member>
+        <member name="T:Info.Blockchain.API.Client.BlockchainHttpClient">
+            <summary>
+            The blockchain HTTP client class. Implements the <see cref="T:Info.Blockchain.API.Client.IHttpClient" />.
+            </summary>
+            <seealso cref="T:Info.Blockchain.API.Client.IHttpClient" />
+        </member>
+        <member name="F:Info.Blockchain.API.Client.BlockchainHttpClient.BASE_URI">
+            <summary>
+            The base URI
+            </summary>
+        </member>
+        <member name="F:Info.Blockchain.API.Client.BlockchainHttpClient.TIMEOUT_MS">
+            <summary>
+            The timeout ms
+            </summary>
+        </member>
+        <member name="F:Info.Blockchain.API.Client.BlockchainHttpClient.httpClient">
+            <summary>
+            The HTTP client
+            </summary>
+        </member>
+        <member name="F:Info.Blockchain.API.Client.BlockchainHttpClient.disposedValue">
+            <summary>
+            The disposed value
+            </summary>
+        </member>
+        <member name="M:Info.Blockchain.API.Client.BlockchainHttpClient.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Info.Blockchain.API.Client.BlockchainHttpClient" /> class.
+            </summary>
+            <param name="apiCode">The API code.</param>
+            <param name="uri">The URI.</param>
+        </member>
+        <member name="M:Info.Blockchain.API.Client.BlockchainHttpClient.Finalize">
+            <summary>
+            Finalizes an instance of the <see cref="T:Info.Blockchain.API.Client.BlockchainHttpClient" /> class.
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Client.BlockchainHttpClient.ApiCode">
+            <summary>
+            Gets or sets the API code.
+            </summary>
+            <value>The API code.</value>
+        </member>
+        <member name="M:Info.Blockchain.API.Client.BlockchainHttpClient.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting
+            unmanaged resources.
+            </summary>
+        </member>
+        <member name="M:Info.Blockchain.API.Client.BlockchainHttpClient.GetAsync``1(System.String,Info.Blockchain.API.Client.QueryString,System.Func{System.String,``0})">
+            <summary>
+            get as an asynchronous operation.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="route">The route.</param>
+            <param name="queryString">The query string.</param>
+            <param name="customDeserialization">The custom deserialization.</param>
+            <returns>T.</returns>
+            <exception cref="T:System.ArgumentNullException">route</exception>
+        </member>
+        <member name="M:Info.Blockchain.API.Client.BlockchainHttpClient.PostAsync``2(System.String,``0,System.Func{System.String,``1},System.Boolean,System.String)">
+            <summary>
+            post as an asynchronous operation.
+            </summary>
+            <typeparam name="TPost">The type of the t post.</typeparam>
+            <typeparam name="TResponse">The type of the t response.</typeparam>
+            <param name="route">The route.</param>
+            <param name="postObject">The post object.</param>
+            <param name="customDeserialization">The custom deserialization.</param>
+            <param name="multiPartContent">if set to <c>true</c> [multi part content].</param>
+            <param name="contentType">Type of the content.</param>
+            <returns>TResponse.</returns>
+            <exception cref="T:System.ArgumentNullException">route</exception>
+        </member>
+        <member name="M:Info.Blockchain.API.Client.BlockchainHttpClient.Dispose(System.Boolean)">
+            <summary>
+            Releases unmanaged and - optionally - managed resources.
+            </summary>
+            <param name="disposing">
+            <c>true</c> to release both managed and unmanaged resources; <c>false</c> to release
+            only unmanaged resources.
+            </param>
+        </member>
+        <member name="M:Info.Blockchain.API.Client.BlockchainHttpClient.ValidateResponse(System.Net.Http.HttpResponseMessage)">
+            <summary>
+            Validates the response.
+            </summary>
+            <param name="response">The response.</param>
+            <returns>The input response.</returns>
+            <exception cref="T:Info.Blockchain.API.Client.ServerApiException">Block Not Found or</exception>
+        </member>
+        <member name="T:Info.Blockchain.API.Client.ClientApiException">
+            <summary>
+            The exception that is thrown when an error happens in the code for the Blockchain Api
+            library, not the on the server that the code calls
+            </summary>
+        </member>
+        <member name="M:Info.Blockchain.API.Client.ClientApiException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Info.Blockchain.API.Client.ClientApiException" /> class.
+            </summary>
+            <param name="message">The message that describes the error.</param>
+        </member>
+        <member name="M:Info.Blockchain.API.Client.ClientApiException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Info.Blockchain.API.Client.ClientApiException" /> class.
+            </summary>
+        </member>
+        <member name="M:Info.Blockchain.API.Client.ClientApiException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Info.Blockchain.API.Client.ClientApiException" /> class.
+            </summary>
+            <param name="message">The error message that explains the reason for the exception.</param>
+            <param name="innerException">
+            The exception that is the cause of the current exception, or a null reference ( <see
+            langword="Nothing" /> in Visual Basic) if no inner exception is specified.
+            </param>
+        </member>
+        <member name="T:Info.Blockchain.API.Client.IHttpClient">
+            <summary>
+            The HTTP client interface. Implements the <see cref="T:System.IDisposable" />.
+            </summary>
+            <seealso cref="T:System.IDisposable" />
+        </member>
+        <member name="P:Info.Blockchain.API.Client.IHttpClient.ApiCode">
+            <summary>
+            Gets or sets the API code.
+            </summary>
+            <value>The API code.</value>
+        </member>
+        <member name="M:Info.Blockchain.API.Client.IHttpClient.GetAsync``1(System.String,Info.Blockchain.API.Client.QueryString,System.Func{System.String,``0})">
+            <summary>
+            Performs an HTTP GET.
+            </summary>
+            <typeparam name="T">The type of the response.</typeparam>
+            <param name="route">The route.</param>
+            <param name="queryString">The query string.</param>
+            <param name="customDeserialization">The custom deserialization.</param>
+            <returns>The result.</returns>
+        </member>
+        <member name="M:Info.Blockchain.API.Client.IHttpClient.PostAsync``2(System.String,``0,System.Func{System.String,``1},System.Boolean,System.String)">
+            <summary>
+            Performs an HTTP POST.
+            </summary>
+            <typeparam name="TPost">The type of the post body.</typeparam>
+            <typeparam name="TResponse">The type of the response.</typeparam>
+            <param name="route">The route.</param>
+            <param name="postObject">The post object.</param>
+            <param name="customDeserialization">The custom deserialization.</param>
+            <param name="multiPartContent">if set to <c>true</c> multi-part content.</param>
+            <param name="contentType">The type of the content.</param>
+            <returns>The response.</returns>
+        </member>
+        <member name="T:Info.Blockchain.API.Client.QueryString">
+            <summary>
+            The query string class.
+            </summary>
+        </member>
+        <member name="F:Info.Blockchain.API.Client.QueryString.queryString">
+            <summary>
+            The query string
+            </summary>
+        </member>
+        <member name="M:Info.Blockchain.API.Client.QueryString.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Info.Blockchain.API.Client.QueryString" /> class.
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Client.QueryString.Count">
+            <summary>
+            Gets the count.
+            </summary>
+            <value>The count.</value>
+        </member>
+        <member name="M:Info.Blockchain.API.Client.QueryString.Add(System.String,System.String)">
+            <summary>
+            Adds the specified key.
+            </summary>
+            <param name="key">The key.</param>
+            <param name="value">The value.</param>
+            <exception cref="T:Info.Blockchain.API.Client.ClientApiException">Query string already has a value for {key}</exception>
+        </member>
+        <member name="M:Info.Blockchain.API.Client.QueryString.AddOrUpdate(System.String,System.String)">
+            <summary>
+            Adds the or update.
+            </summary>
+            <param name="key">The key.</param>
+            <param name="value">The value.</param>
+        </member>
+        <member name="M:Info.Blockchain.API.Client.QueryString.ToString">
+            <summary>
+            Returns a <see cref="T:System.String" /> that represents this instance.
+            </summary>
+            <returns>A <see cref="T:System.String" /> that represents this instance.</returns>
+        </member>
+        <member name="T:Info.Blockchain.API.Client.ServerApiException">
+            <summary>
+            The class `ApiException` represents a failed call to the Blockchain API. Whenever the server
+            is unable to process a request (usually due to parameter validation errors), an instance of
+            this class is thrown.
+            </summary>
+        </member>
+        <member name="M:Info.Blockchain.API.Client.ServerApiException.#ctor(System.String,System.Net.HttpStatusCode)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Info.Blockchain.API.Client.ServerApiException" /> class.
+            </summary>
+            <param name="message">The message.</param>
+            <param name="statusCode">The status code.</param>
+        </member>
+        <member name="M:Info.Blockchain.API.Client.ServerApiException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Info.Blockchain.API.Client.ServerApiException" /> class.
+            </summary>
+        </member>
+        <member name="M:Info.Blockchain.API.Client.ServerApiException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Info.Blockchain.API.Client.ServerApiException" /> class.
+            </summary>
+            <param name="message">The message that describes the error.</param>
+        </member>
+        <member name="M:Info.Blockchain.API.Client.ServerApiException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Info.Blockchain.API.Client.ServerApiException" /> class.
+            </summary>
+            <param name="message">The error message that explains the reason for the exception.</param>
+            <param name="innerException">
+            The exception that is the cause of the current exception, or a null reference ( <see
+            langword="Nothing" /> in Visual Basic) if no inner exception is specified.
+            </param>
+        </member>
+        <member name="P:Info.Blockchain.API.Client.ServerApiException.StatusCode">
+            <summary>
+            Gets the status code.
+            </summary>
+            <value>The status code.</value>
+        </member>
+        <member name="T:Info.Blockchain.API.ExchangeRates.ExchangeRateExplorer">
+            <summary>
+            This class reflects the functionality documented at
+            https://blockchain.info/api/exchange_rates_api. It allows users to fetch the latest ticker
+            data and convert amounts between BTC and fiat currencies.
+            </summary>
+        </member>
+        <member name="F:Info.Blockchain.API.ExchangeRates.ExchangeRateExplorer.httpClient">
+            <summary>
+            The HTTP client
+            </summary>
+        </member>
+        <member name="F:Info.Blockchain.API.ExchangeRates.ExchangeRateExplorer.disposedValue">
+            <summary>
+            The disposed value
+            </summary>
+        </member>
+        <member name="M:Info.Blockchain.API.ExchangeRates.ExchangeRateExplorer.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Info.Blockchain.API.ExchangeRates.ExchangeRateExplorer" /> class.
+            </summary>
+        </member>
+        <member name="M:Info.Blockchain.API.ExchangeRates.ExchangeRateExplorer.#ctor(Info.Blockchain.API.Client.IHttpClient)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Info.Blockchain.API.ExchangeRates.ExchangeRateExplorer" /> class.
+            </summary>
+            <param name="httpClient">The HTTP client.</param>
+        </member>
+        <member name="M:Info.Blockchain.API.ExchangeRates.ExchangeRateExplorer.Finalize">
+            <summary>
+            Finalizes an instance of the <see cref="T:Info.Blockchain.API.ExchangeRates.ExchangeRateExplorer" /> class.
+            </summary>
+        </member>
+        <member name="M:Info.Blockchain.API.ExchangeRates.ExchangeRateExplorer.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting
+            unmanaged resources.
+            </summary>
+        </member>
+        <member name="M:Info.Blockchain.API.ExchangeRates.ExchangeRateExplorer.FromBtcAsync(Info.Blockchain.API.Models.BitcoinValue,System.String)">
+            <summary>
+            Converts a BitcoinValue object to its value in the specified currency
+            </summary>
+            <param name="btc">BitcoinValue representing the value to convert from</param>
+            <param name="currency">Currency code (default USD)</param>
+            <returns>Converted value in currency of choice</returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+        </member>
+        <member name="M:Info.Blockchain.API.ExchangeRates.ExchangeRateExplorer.GetTickerAsync">
+            <summary>
+            Gets the price ticker from https://blockchain.info/ticker
+            </summary>
+            <returns>
+            A dictionary of currencies where the key is a 3-letter currency symbol and the value is
+            the `Currency` class
+            </returns>
+            <exception cref="T:Info.Blockchain.API.Client.ServerApiException">If the server returns an error</exception>
+        </member>
+        <member name="M:Info.Blockchain.API.ExchangeRates.ExchangeRateExplorer.ToBtcAsync(System.String,System.Double)">
+            <summary>
+            Converts x value in the provided currency to BTC.
+            </summary>
+            <param name="currency">Currency code</param>
+            <param name="value">Value to convert</param>
+            <returns>Converted value in BTC</returns>
+            <exception cref="T:Info.Blockchain.API.Client.ServerApiException">If the server returns an error</exception>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+        </member>
+        <member name="M:Info.Blockchain.API.ExchangeRates.ExchangeRateExplorer.Dispose(System.Boolean)">
+            <summary>
+            Releases unmanaged and - optionally - managed resources.
+            </summary>
+            <param name="disposing">
+            <c>true</c> to release both managed and unmanaged resources; <c>false</c> to release
+            only unmanaged resources.
+            </param>
+        </member>
+        <member name="T:Info.Blockchain.API.Json.BitcoinValueJsonConverter">
+            <summary>
+            The bitcoin value JSON converter class. Implements the <see cref="T:Newtonsoft.Json.JsonConverter" />.
+            </summary>
+            <seealso cref="T:Newtonsoft.Json.JsonConverter" />
+        </member>
+        <member name="M:Info.Blockchain.API.Json.BitcoinValueJsonConverter.CanConvert(System.Type)">
+            <inheritdoc />
+        </member>
+        <member name="M:Info.Blockchain.API.Json.BitcoinValueJsonConverter.ReadJson(Newtonsoft.Json.JsonReader,System.Type,System.Object,Newtonsoft.Json.JsonSerializer)">
+            <inheritdoc />
+        </member>
+        <member name="M:Info.Blockchain.API.Json.BitcoinValueJsonConverter.WriteJson(Newtonsoft.Json.JsonWriter,System.Object,Newtonsoft.Json.JsonSerializer)">
+            <inheritdoc />
+        </member>
+        <member name="T:Info.Blockchain.API.Json.NativeBitcoinValueJsonConverter">
+            <summary>
+            The NativeBitcoinValueJsonConverter class. Implements the <see
+            cref="T:System.Text.Json.Serialization.JsonConverter`1" />.
+            </summary>
+            <seealso cref="T:System.Text.Json.Serialization.JsonConverter`1" />
+        </member>
+        <member name="M:Info.Blockchain.API.Json.NativeBitcoinValueJsonConverter.CanConvert(System.Type)">
+            <inheritdoc />
+        </member>
+        <member name="M:Info.Blockchain.API.Json.NativeBitcoinValueJsonConverter.Read(System.Text.Json.Utf8JsonReader@,System.Type,System.Text.Json.JsonSerializerOptions)">
+            <inheritdoc />
+        </member>
+        <member name="M:Info.Blockchain.API.Json.NativeBitcoinValueJsonConverter.Write(System.Text.Json.Utf8JsonWriter,Info.Blockchain.API.Models.BitcoinValue,System.Text.Json.JsonSerializerOptions)">
+            <inheritdoc />
+        </member>
+        <member name="T:Info.Blockchain.API.Json.NativeTrueTrumpsAllJsonConverter">
+            <summary>
+            The NativeTrueTrumpsAllJsonConverter class. Implements the <see
+            cref="T:System.Text.Json.Serialization.JsonConverter`1" />.
+            </summary>
+            <seealso cref="T:System.Text.Json.Serialization.JsonConverter`1" />
+        </member>
+        <member name="M:Info.Blockchain.API.Json.NativeTrueTrumpsAllJsonConverter.CanConvert(System.Type)">
+            <inheritdoc />
+        </member>
+        <member name="M:Info.Blockchain.API.Json.NativeTrueTrumpsAllJsonConverter.Read(System.Text.Json.Utf8JsonReader@,System.Type,System.Text.Json.JsonSerializerOptions)">
+            <inheritdoc />
+        </member>
+        <member name="M:Info.Blockchain.API.Json.NativeTrueTrumpsAllJsonConverter.Write(System.Text.Json.Utf8JsonWriter,System.Boolean,System.Text.Json.JsonSerializerOptions)">
+            <inheritdoc />
+        </member>
+        <member name="T:Info.Blockchain.API.Json.TrueTrumpsAllJsonConverter">
+            <summary>
+            The true trumps all JSON converter class. Implements the <see cref="T:Newtonsoft.Json.JsonConverter" />.
+            </summary>
+            <seealso cref="T:Newtonsoft.Json.JsonConverter" />
+        </member>
+        <member name="M:Info.Blockchain.API.Json.TrueTrumpsAllJsonConverter.CanConvert(System.Type)">
+            <inheritdoc />
+        </member>
+        <member name="M:Info.Blockchain.API.Json.TrueTrumpsAllJsonConverter.ReadJson(Newtonsoft.Json.JsonReader,System.Type,System.Object,Newtonsoft.Json.JsonSerializer)">
+            <inheritdoc />
+        </member>
+        <member name="M:Info.Blockchain.API.Json.TrueTrumpsAllJsonConverter.WriteJson(Newtonsoft.Json.JsonWriter,System.Object,Newtonsoft.Json.JsonSerializer)">
+            <inheritdoc />
+        </member>
+        <member name="T:Info.Blockchain.API.Json.UnixDateTimeJsonConverter">
+            <summary>
+            The Unix date/time JSON converter class. Implements the <see cref="T:Newtonsoft.Json.Converters.DateTimeConverterBase" />.
+            </summary>
+            <seealso cref="T:Newtonsoft.Json.Converters.DateTimeConverterBase" />
+        </member>
+        <member name="F:Info.Blockchain.API.Json.UnixDateTimeJsonConverter.GenesisBlockUnixMillis">
+            <summary>
+            The genesis block unix millis
+            </summary>
+        </member>
+        <member name="M:Info.Blockchain.API.Json.UnixDateTimeJsonConverter.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Info.Blockchain.API.Json.UnixDateTimeJsonConverter" /> class.
+            </summary>
+        </member>
+        <member name="M:Info.Blockchain.API.Json.UnixDateTimeJsonConverter.#ctor(System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Info.Blockchain.API.Json.UnixDateTimeJsonConverter" /> class.
+            </summary>
+            <param name="convertFromMillis">if set to <c>true</c> [convert from millis].</param>
+        </member>
+        <member name="P:Info.Blockchain.API.Json.UnixDateTimeJsonConverter.GenesisBlockDate">
+            <summary>
+            Gets the genesis block date.
+            </summary>
+            <value>The genesis block date.</value>
+        </member>
+        <member name="P:Info.Blockchain.API.Json.UnixDateTimeJsonConverter.Epoch">
+            <summary>
+            Gets the epoch.
+            </summary>
+            <value>The epoch.</value>
+        </member>
+        <member name="P:Info.Blockchain.API.Json.UnixDateTimeJsonConverter.ConvertFromMillis">
+            <summary>
+            Gets a value indicating whether [convert from millis].
+            </summary>
+            <value><c>true</c> if [convert from millis]; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="M:Info.Blockchain.API.Json.UnixDateTimeJsonConverter.ReadJson(Newtonsoft.Json.JsonReader,System.Type,System.Object,Newtonsoft.Json.JsonSerializer)">
+            <summary>
+            Reads the JSON representation of the object.
+            </summary>
+            <param name="reader">The <see cref="T:Newtonsoft.Json.JsonReader" /> to read from.</param>
+            <param name="objectType">Type of the object.</param>
+            <param name="existingValue">The existing value of object being read.</param>
+            <param name="serializer">The calling serializer.</param>
+            <returns>The object value.</returns>
+        </member>
+        <member name="M:Info.Blockchain.API.Json.UnixDateTimeJsonConverter.WriteJson(Newtonsoft.Json.JsonWriter,System.Object,Newtonsoft.Json.JsonSerializer)">
+            <summary>
+            Writes the JSON representation of the object.
+            </summary>
+            <param name="writer">The <see cref="T:Newtonsoft.Json.JsonWriter" /> to write to.</param>
+            <param name="value">The value.</param>
+            <param name="serializer">The calling serializer.</param>
+        </member>
+        <member name="M:Info.Blockchain.API.Json.UnixDateTimeJsonConverter.DateTimeToUnixSeconds(System.DateTime)">
+            <summary>
+            Dates the time to unix seconds.
+            </summary>
+            <param name="dateTime">The date time.</param>
+            <returns>System.Double.</returns>
+        </member>
+        <member name="M:Info.Blockchain.API.Json.UnixDateTimeJsonConverter.UnixMillisToDateTime(System.Double)">
+            <summary>
+            Unixes the millis to date time.
+            </summary>
+            <param name="unixMillis">The unix millis.</param>
+            <returns>DateTime.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            unixMillis - No date can be before the genesis block (2009-01-03T18:15:05+00:00)
+            </exception>
+        </member>
+        <member name="M:Info.Blockchain.API.Json.UnixDateTimeJsonConverter.UnixSecondsToDateTime(System.Double)">
+            <summary>
+            Unixes the seconds to date time.
+            </summary>
+            <param name="unixSeconds">The unix seconds.</param>
+            <returns>DateTime.</returns>
+        </member>
+        <member name="T:Info.Blockchain.API.Json.UnixEpochDateTimeConverter">
+            <summary>
+            The UnixEpochDateTimeConverter class. This class cannot be inherited. Implements the <see
+            cref="T:System.Text.Json.Serialization.JsonConverter`1" />.
+            </summary>
+            <seealso cref="T:System.Text.Json.Serialization.JsonConverter`1" />
+        </member>
+        <member name="M:Info.Blockchain.API.Json.UnixEpochDateTimeConverter.Read(System.Text.Json.Utf8JsonReader@,System.Type,System.Text.Json.JsonSerializerOptions)">
+            <inheritdoc />
+        </member>
+        <member name="M:Info.Blockchain.API.Json.UnixEpochDateTimeConverter.Write(System.Text.Json.Utf8JsonWriter,System.DateTime,System.Text.Json.JsonSerializerOptions)">
+            <inheritdoc />
+        </member>
+        <member name="M:Info.Blockchain.API.Json.UnixEpochDateTimeConverter.IsNumeric(System.String)">
+            <summary>
+            Determines whether the specified value is numeric.
+            </summary>
+            <param name="value">The value.</param>
+            <returns><c>true</c> if the specified value is numeric; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="T:Info.Blockchain.API.Json.UnixEpochDateTimeOffsetConverter">
+            <summary>
+            The UnixEpochDateTimeOffsetConverter class. This class cannot be inherited. Implements the
+            <see cref="T:System.Text.Json.Serialization.JsonConverter`1" />.
+            </summary>
+            <seealso cref="T:System.Text.Json.Serialization.JsonConverter`1" />
+        </member>
+        <member name="M:Info.Blockchain.API.Json.UnixEpochDateTimeOffsetConverter.Read(System.Text.Json.Utf8JsonReader@,System.Type,System.Text.Json.JsonSerializerOptions)">
+            <inheritdoc />
+        </member>
+        <member name="M:Info.Blockchain.API.Json.UnixEpochDateTimeOffsetConverter.Write(System.Text.Json.Utf8JsonWriter,System.DateTimeOffset,System.Text.Json.JsonSerializerOptions)">
+            <inheritdoc />
+        </member>
+        <member name="T:Info.Blockchain.API.Models.Address">
+            <summary>
+            Represents an address.
+            </summary>
+        </member>
+        <member name="M:Info.Blockchain.API.Models.Address.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Info.Blockchain.API.Models.Address"/> class.
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.Address.Base58Check">
+            <summary>
+            Base58Check representation of the address
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.Address.FinalBalance">
+            <summary>
+            Final balance of the address
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.Address.Hash160">
+            <summary>
+            Hash160 representation of the address
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.Address.TotalReceived">
+            <summary>
+            Total amount received
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.Address.TotalSent">
+            <summary>
+            Total amount sent
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.Address.TransactionCount">
+            <summary>
+            Total count of all transactions of this address
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.Address.Transactions">
+            <summary>
+            List of transactions associated with this address
+            </summary>
+        </member>
+        <member name="T:Info.Blockchain.API.Models.BitcoinValue">
+            <summary>
+            The bitcoin value class. Implements the <see cref="T:System.IEquatable`1" />.
+            </summary>
+            <seealso cref="T:System.IEquatable`1" />
+        </member>
+        <member name="F:Info.Blockchain.API.Models.BitcoinValue.BITS_PER_BITCOIN">
+            <summary>
+            The bits per bitcoin
+            </summary>
+        </member>
+        <member name="F:Info.Blockchain.API.Models.BitcoinValue.MILLIBITS_PER_BITCOIN">
+            <summary>
+            The millibits per bitcoin
+            </summary>
+        </member>
+        <member name="F:Info.Blockchain.API.Models.BitcoinValue.SATOSHIS_PER_BITCOIN">
+            <summary>
+            The satoshis per bitcoin
+            </summary>
+        </member>
+        <member name="F:Info.Blockchain.API.Models.BitcoinValue.btc">
+            <summary>
+            The BTC
+            </summary>
+        </member>
+        <member name="M:Info.Blockchain.API.Models.BitcoinValue.#ctor(System.Decimal)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Info.Blockchain.API.Models.BitcoinValue" /> class.
+            </summary>
+            <param name="btc">The BTC.</param>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.BitcoinValue.Zero">
+            <summary>
+            Gets the zero.
+            </summary>
+            <value>The zero.</value>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.BitcoinValue.Bits">
+            <summary>
+            Gets the bits.
+            </summary>
+            <value>The bits.</value>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.BitcoinValue.MilliBits">
+            <summary>
+            Gets the milli bits.
+            </summary>
+            <value>The milli bits.</value>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.BitcoinValue.Satoshis">
+            <summary>
+            Gets the satoshis.
+            </summary>
+            <value>The satoshis.</value>
+        </member>
+        <member name="M:Info.Blockchain.API.Models.BitcoinValue.FromBits(System.Decimal)">
+            <summary>
+            Froms the bits.
+            </summary>
+            <param name="bits">The bits.</param>
+            <returns>BitcoinValue.</returns>
+        </member>
+        <member name="M:Info.Blockchain.API.Models.BitcoinValue.FromBtc(System.Decimal)">
+            <summary>
+            Froms the BTC.
+            </summary>
+            <param name="btc">The BTC.</param>
+            <returns>BitcoinValue.</returns>
+        </member>
+        <member name="M:Info.Blockchain.API.Models.BitcoinValue.FromMilliBits(System.Decimal)">
+            <summary>
+            Froms the milli bits.
+            </summary>
+            <param name="mBtc">The m BTC.</param>
+            <returns>BitcoinValue.</returns>
+        </member>
+        <member name="M:Info.Blockchain.API.Models.BitcoinValue.FromSatoshis(System.Int64)">
+            <summary>
+            Froms the satoshis.
+            </summary>
+            <param name="satoshis">The satoshis.</param>
+            <returns>BitcoinValue.</returns>
+        </member>
+        <member name="M:Info.Blockchain.API.Models.BitcoinValue.op_Subtraction(Info.Blockchain.API.Models.BitcoinValue,Info.Blockchain.API.Models.BitcoinValue)">
+            <summary>
+            Implements the - operator.
+            </summary>
+            <param name="x">The x.</param>
+            <param name="y">The y.</param>
+            <returns>The result of the operator.</returns>
+        </member>
+        <member name="M:Info.Blockchain.API.Models.BitcoinValue.op_Addition(Info.Blockchain.API.Models.BitcoinValue,Info.Blockchain.API.Models.BitcoinValue)">
+            <summary>
+            Implements the + operator.
+            </summary>
+            <param name="x">The x.</param>
+            <param name="y">The y.</param>
+            <returns>The result of the operator.</returns>
+        </member>
+        <member name="M:Info.Blockchain.API.Models.BitcoinValue.Equals(Info.Blockchain.API.Models.BitcoinValue)">
+            <summary>
+            Indicates whether the current object is equal to another object of the same type.
+            </summary>
+            <param name="other">An object to compare with this object.</param>
+            <returns>
+            <see langword="true" /> if the current object is equal to the <paramref name="other" />
+            parameter; otherwise, <see langword="false" />.
+            </returns>
+        </member>
+        <member name="M:Info.Blockchain.API.Models.BitcoinValue.Equals(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Info.Blockchain.API.Models.BitcoinValue.GetBtc">
+            <summary>
+            Gets the BTC.
+            </summary>
+            <returns>System.Decimal.</returns>
+        </member>
+        <member name="M:Info.Blockchain.API.Models.BitcoinValue.GetHashCode">
+            <inheritdoc />
+        </member>
+        <member name="M:Info.Blockchain.API.Models.BitcoinValue.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:Info.Blockchain.API.Models.Block">
+            <summary>
+            This class is a full representation of a block. For simpler representations, see <see
+            cref="T:Info.Blockchain.API.Models.SimpleBlock" /> and <see cref="T:Info.Blockchain.API.Models.LatestBlock" />.
+            </summary>
+        </member>
+        <member name="F:Info.Blockchain.API.Models.Block.receivedTime">
+            <summary>
+            Gets the received time.
+            </summary>
+            <value>The received time.</value>
+        </member>
+        <member name="M:Info.Blockchain.API.Models.Block.#ctor">
+            <summary>
+            Prevents a default instance of the <see cref="T:Info.Blockchain.API.Models.Block" /> class from being created.
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.Block.Bits">
+            <summary>
+            Representation of the difficulty target for this block
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.Block.Fees">
+            <summary>
+            Total transaction fees from this block
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.Block.Index">
+            <summary>
+            Index of this block
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.Block.MerkleRoot">
+            <summary>
+            Merkle root of the block
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.Block.Nonce">
+            <summary>
+            Block nonce
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.Block.PreviousBlockHash">
+            <summary>
+            Hash of the previous block
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.Block.ReceivedTime">
+            <summary>
+            The time this block was received by Blockchain.info
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.Block.RelayedBy">
+            <summary>
+            IP address that relayed the block
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.Block.Size">
+            <summary>
+            Serialized size of this block
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.Block.Transactions">
+            <summary>
+            Transactions in the block
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.Block.Version">
+            <summary>
+            Block version as specified by the protocol
+            </summary>
+        </member>
+        <member name="M:Info.Blockchain.API.Models.Block.Deserialize(System.String)">
+            <summary>
+            Deserializes the specified block json.
+            </summary>
+            <param name="blockJson">The block json.</param>
+            <returns>Info.Blockchain.API.Models.Block?.</returns>
+        </member>
+        <member name="M:Info.Blockchain.API.Models.Block.DeserializeMultiple(System.String)">
+            <summary>
+            Deserializes multiple blocks from the specified JSON string.
+            </summary>
+            <param name="blocksJson">The blocks JSON string.</param>
+            <returns>System.Collections.ObjectModel.ReadOnlyCollection&lt;Info.Blockchain.API.Models.Block&gt;.</returns>
+        </member>
+        <member name="T:Info.Blockchain.API.Models.CallbackLog">
+            <summary>
+            The callback log class.
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.CallbackLog.CallbackUrl">
+            <summary>
+            Gets the callback URL.
+            </summary>
+            <value>The callback URL.</value>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.CallbackLog.CallDateString">
+            <summary>
+            Gets the call date string.
+            </summary>
+            <value>The call date string.</value>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.CallbackLog.RawResponse">
+            <summary>
+            Gets the raw response.
+            </summary>
+            <value>The raw response.</value>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.CallbackLog.ResponseCode">
+            <summary>
+            Gets the response code.
+            </summary>
+            <value>The response code.</value>
+        </member>
+        <member name="T:Info.Blockchain.API.Models.ChartResponse">
+            <summary>
+            This class is used as a response object to the chart 'get' method in the 'Statistics' class
+            </summary>
+        </member>
+        <member name="M:Info.Blockchain.API.Models.ChartResponse.#ctor">
+            <summary>
+            Prevents a default instance of the <see cref="T:Info.Blockchain.API.Models.ChartResponse"/> class from being created.
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.ChartResponse.ChartName">
+            <summary>
+            Chart name
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.ChartResponse.Description">
+            <summary>
+            A description of the chart
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.ChartResponse.Timespan">
+            <summary>
+            The timespan covered in this chart response
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.ChartResponse.Unit">
+            <summary>
+            Measuring unit
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.ChartResponse.Values">
+            <summary>
+            Chart values
+            </summary>
+        </member>
+        <member name="T:Info.Blockchain.API.Models.ChartValue">
+            <summary>
+            A class representing a single chart value
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.ChartValue.X">
+            <summary>
+            X Value
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.ChartValue.Y">
+            <summary>
+            Y Value
+            </summary>
+        </member>
+        <member name="T:Info.Blockchain.API.Models.CreateWalletRequest">
+            <summary>
+            The create wallet request class.
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.CreateWalletRequest.ApiCode">
+            <summary>
+            Gets or sets the API code.
+            </summary>
+            <value>The API code.</value>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.CreateWalletRequest.Email">
+            <summary>
+            Gets or sets the email.
+            </summary>
+            <value>The email.</value>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.CreateWalletRequest.Label">
+            <summary>
+            Gets or sets the label.
+            </summary>
+            <value>The label.</value>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.CreateWalletRequest.Password">
+            <summary>
+            Gets or sets the password.
+            </summary>
+            <value>The password.</value>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.CreateWalletRequest.PrivateKey">
+            <summary>
+            Gets or sets the private key.
+            </summary>
+            <value>The private key.</value>
+        </member>
+        <member name="T:Info.Blockchain.API.Models.CreateWalletResponse">
+            <summary>
+            The create wallet response class.
+            </summary>
+        </member>
+        <member name="M:Info.Blockchain.API.Models.CreateWalletResponse.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Info.Blockchain.API.Models.CreateWalletResponse" /> class.
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.CreateWalletResponse.Address">
+            <summary>
+            First address in the wallet
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.CreateWalletResponse.Identifier">
+            <summary>
+            Wallet identifier (GUID)
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.CreateWalletResponse.Label">
+            <summary>
+            Optional label
+            </summary>
+        </member>
+        <member name="T:Info.Blockchain.API.Models.Currency">
+            <summary>
+            This class is used in the response of the `GetTicker` method in the `ExchangeRates` class.
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.Currency.Buy">
+            <summary>
+            Current buy price
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.Currency.Last">
+            <summary>
+            Most recent market price
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.Currency.Price15M">
+            <summary>
+            15 minutes delayed market price
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.Currency.Sell">
+            <summary>
+            Current sell price
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.Currency.Symbol">
+            <summary>
+            Currency symbol
+            </summary>
+        </member>
+        <member name="T:Info.Blockchain.API.Models.Input">
+            <summary>
+            Represents a transaction input. If the PreviousOutput object is null, this is a coinbase input.
+            </summary>
+        </member>
+        <member name="M:Info.Blockchain.API.Models.Input.#ctor">
+            <summary>
+            Prevents a default instance of the <see cref="T:Info.Blockchain.API.Models.Input" /> class from being created.
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.Input.PreviousOutput">
+            <summary>
+            Previous output. If null, this is a coinbase input.
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.Input.ScriptSignature">
+            <summary>
+            Script signature
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.Input.Sequence">
+            <summary>
+            Sequence number of the input
+            </summary>
+        </member>
+        <member name="T:Info.Blockchain.API.Models.LatestBlock">
+            <summary>
+            Used as a response to the `GetLatestBlock` method in the `BlockExplorer` class.
+            </summary>
+        </member>
+        <member name="M:Info.Blockchain.API.Models.LatestBlock.#ctor">
+            <summary>
+            Prevents a default instance of the <see cref="T:Info.Blockchain.API.Models.LatestBlock"/> class from being created.
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.LatestBlock.Index">
+            <summary>
+            Block index
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.LatestBlock.TransactionIndexes">
+            <summary>
+            Transaction indexes included in this block
+            </summary>
+        </member>
+        <member name="T:Info.Blockchain.API.Models.MultiAddress">
+            <summary>
+            Represents a multiaddr response
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.MultiAddress.Addresses">
+            <summary>
+            Gets the addresses.
+            </summary>
+            <value>The addresses.</value>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.MultiAddress.Transactions">
+            <summary>
+            List of up to 50 transactions associated with the specified address
+            </summary>
+        </member>
+        <member name="T:Info.Blockchain.API.Models.Output">
+            <summary>
+            Represents a transaction output.
+            </summary>
+        </member>
+        <member name="M:Info.Blockchain.API.Models.Output.#ctor">
+            <summary>
+            Prevents a default instance of the <see cref="T:Info.Blockchain.API.Models.Output" /> class from being created.
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.Output.Address">
+            <summary>
+            Address that the output belongs to
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.Output.N">
+            <summary>
+            Index of the output in a transaction
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.Output.Script">
+            <summary>
+            Output script
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.Output.Spent">
+            <summary>
+            Whether the output is spent
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.Output.TxIndex">
+            <summary>
+            Transaction index
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.Output.Value">
+            <summary>
+            Value of the output
+            </summary>
+        </member>
+        <member name="T:Info.Blockchain.API.Models.PaymentResponse">
+            <summary>
+            Used as a response object to the `send` and `sendMany` methods in the `Wallet` class.
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.PaymentResponse.Message">
+            <summary>
+            Response message from the server
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.PaymentResponse.Notice">
+            <summary>
+            Additional response message from the server
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.PaymentResponse.TxHash">
+            <summary>
+            Transaction hash
+            </summary>
+        </member>
+        <member name="T:Info.Blockchain.API.Models.ReceivePaymentResponse">
+            <summary>
+            The receive payment response class.
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.ReceivePaymentResponse.Address">
+            <summary>
+            The newly generated address
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.ReceivePaymentResponse.Callback">
+            <summary>
+            The callback URL
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.ReceivePaymentResponse.Index">
+            <summary>
+            The current index of the provided xpub
+            </summary>
+        </member>
+        <member name="T:Info.Blockchain.API.Models.SimpleBlock">
+            <summary>
+            Simple representation of a block
+            </summary>
+        </member>
+        <member name="M:Info.Blockchain.API.Models.SimpleBlock.#ctor(System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Info.Blockchain.API.Models.SimpleBlock" /> class.
+            </summary>
+            <param name="mainChain">if set to <c>true</c> [main chain].</param>
+        </member>
+        <member name="M:Info.Blockchain.API.Models.SimpleBlock.#ctor">
+            <summary>
+            Prevents a default instance of the <see cref="T:Info.Blockchain.API.Models.SimpleBlock" /> class from being created.
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.SimpleBlock.Hash">
+            <summary>
+            Block hash
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.SimpleBlock.Height">
+            <summary>
+            Block height
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.SimpleBlock.MainChain">
+            <summary>
+            Whether the block is on the main chain
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.SimpleBlock.Time">
+            <summary>
+            Block timestamp set by the miner
+            </summary>
+        </member>
+        <member name="M:Info.Blockchain.API.Models.SimpleBlock.DeserializeMultiple(System.String)">
+            <summary>
+            Deserializes the multiple.
+            </summary>
+            <param name="blocksJson">The blocks json.</param>
+            <returns>System.Collections.ObjectModel.ReadOnlyCollection&lt;Info.Blockchain.API.Models.SimpleBlock&gt;?.</returns>
+        </member>
+        <member name="T:Info.Blockchain.API.Models.StatisticsResponse">
+            <summary>
+            This class is used as a response object to the 'get' method in the 'Statistics' class
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.StatisticsResponse.BlocksSize">
+            <summary>
+            Gets or sets the size of the blocks.
+            </summary>
+            <value>The size of the blocks.</value>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.StatisticsResponse.BtcMined">
+            <summary>
+            Number of BTC mined in the past 24 hours
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.StatisticsResponse.Difficulty">
+            <summary>
+            Current difficulty
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.StatisticsResponse.EstimatedBtcSent">
+            <summary>
+            Estimated BTC sent in the past 24 hours
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.StatisticsResponse.EstimatedTransactionVolumeUsd">
+            <summary>
+            Estimated transaction volume in the past 24 hours
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.StatisticsResponse.HashRate">
+            <summary>
+            Current hashrate in GH/s
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.StatisticsResponse.MarketPriceUsd">
+            <summary>
+            Current market price in USD
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.StatisticsResponse.MinedBlocks">
+            <summary>
+            Number of blocks mined in the past 24 hours
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.StatisticsResponse.MinersRevenueBtc">
+            <summary>
+            Miners' revenue in BTC
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.StatisticsResponse.MinersRevenueUsd">
+            <summary>
+            Miners' revenue in USD
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.StatisticsResponse.MinutesBetweenBlocks">
+            <summary>
+            Minutes between blocks
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.StatisticsResponse.NextRetarget">
+            <summary>
+            The next block height where the difficulty retarget will occur
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.StatisticsResponse.NumberOfTransactions">
+            <summary>
+            Number of transactions in the past 24 hours
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.StatisticsResponse.Timestamp">
+            <summary>
+            Timestamp of when this report was compiled (in ms)
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.StatisticsResponse.TotalBlocks">
+            <summary>
+            Total number of blocks in existence
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.StatisticsResponse.TotalBtc">
+            <summary>
+            Total BTC in existence
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.StatisticsResponse.TotalBtcSent">
+            <summary>
+            Total BTC sent in the past 24 hours
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.StatisticsResponse.TotalFeesBtc">
+            <summary>
+            Total fees in the past 24 hours
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.StatisticsResponse.TradeVolumeBtc">
+            <summary>
+            Trade volume in the past 24 hours (in BTC)
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.StatisticsResponse.TradeVolumeUsd">
+            <summary>
+            Trade volume in the past 24 hours (in USD)
+            </summary>
+        </member>
+        <member name="T:Info.Blockchain.API.Models.Transaction">
+            <summary>
+            Represents a transaction.
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.Transaction.BlockHeight">
+            <summary>
+            Block height of the parent block. -1 for unconfirmed transactions.
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.Transaction.DoubleSpend">
+            <summary>
+            Whether the transaction is a double spend
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.Transaction.Hash">
+            <summary>
+            Transaction hash
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.Transaction.Index">
+            <summary>
+            Transaction index
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.Transaction.Inputs">
+            <summary>
+            List of inputs
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.Transaction.Outputs">
+            <summary>
+            List of outputs
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.Transaction.RelayedBy">
+            <summary>
+            IP address that relayed the transaction
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.Transaction.Size">
+            <summary>
+            Serialized size of the transaction
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.Transaction.Time">
+            <summary>
+            Timestamp of the transaction
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.Transaction.Version">
+            <summary>
+            Transaction format version
+            </summary>
+        </member>
+        <member name="M:Info.Blockchain.API.Models.Transaction.DeserializeMultiple(System.String)">
+            <summary>
+            Deserializes the multiple.
+            </summary>
+            <param name="transactionsJson">The transactions json.</param>
+            <returns>ReadOnlyCollection&lt;System.Nullable&lt;Transaction&gt;&gt;.</returns>
+        </member>
+        <member name="T:Info.Blockchain.API.Models.UnspentOutput">
+            <summary>
+            Represents an unspent transaction output.
+            </summary>
+        </member>
+        <member name="M:Info.Blockchain.API.Models.UnspentOutput.#ctor">
+            <summary>
+            Prevents a default instance of the <see cref="T:Info.Blockchain.API.Models.UnspentOutput" /> class from being created.
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.UnspentOutput.Confirmations">
+            <summary>
+            Number of confirmations
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.UnspentOutput.N">
+            <summary>
+            Index of the output in a transaction
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.UnspentOutput.Script">
+            <summary>
+            Output script
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.UnspentOutput.TransactionHash">
+            <summary>
+            Transaction hash
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.UnspentOutput.TransactionIndex">
+            <summary>
+            Transaction index
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.UnspentOutput.Value">
+            <summary>
+            Value of the output
+            </summary>
+        </member>
+        <member name="M:Info.Blockchain.API.Models.UnspentOutput.DeserializeMultiple(System.String)">
+            <summary>
+            Deserializes multiple unspent outputs.
+            </summary>
+            <param name="outputsJson">The outputs JSON.</param>
+            <returns>System.Collections.ObjectModel.ReadOnlyCollection&lt;Info.Blockchain.API.Models.UnspentOutput&gt;.</returns>
+        </member>
+        <member name="T:Info.Blockchain.API.Models.WalletAddress">
+            <summary>
+            Used in combination with the `Wallet` class
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.WalletAddress.AddressStr">
+            <summary>
+            String representation of the address
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.WalletAddress.Balance">
+            <summary>
+            Balance in bitcoins
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.WalletAddress.Label">
+            <summary>
+            Label attached to the address
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.WalletAddress.TotalReceived">
+            <summary>
+            Total received amount
+            </summary>
+        </member>
+        <member name="M:Info.Blockchain.API.Models.WalletAddress.DeserializeArchived(System.String)">
+            <summary>
+            Deserializes the archived property of the specified JSON.
+            </summary>
+            <param name="json">The JSON string.</param>
+            <returns>string?.</returns>
+        </member>
+        <member name="M:Info.Blockchain.API.Models.WalletAddress.DeserializeConsolidated(System.String)">
+            <summary>
+            Deserializes the consolidated property of the specified JSON.
+            </summary>
+            <param name="json">The JSON string.</param>
+            <returns>System.Collections.Generic.List&lt;string?&gt;.</returns>
+        </member>
+        <member name="M:Info.Blockchain.API.Models.WalletAddress.DeserializeMultiple(System.String)">
+            <summary>
+            Deserializes multiple wallet addresses from the specified JSON string.
+            </summary>
+            <param name="json">The JSON string.</param>
+            <returns>System.Collections.Generic.List&lt;Info.Blockchain.API.Models.WalletAddress?&gt;.</returns>
+        </member>
+        <member name="M:Info.Blockchain.API.Models.WalletAddress.DeserializeUnArchived(System.String)">
+            <summary>
+            Deserializes the active property of the specified JSON.
+            </summary>
+            <param name="json">The JSON string.</param>
+            <returns>string?.</returns>
+        </member>
+        <member name="T:Info.Blockchain.API.Models.Xpub">
+            <summary>
+            The Xpub class. Implements the <see cref="T:Info.Blockchain.API.Models.Address" />.
+            </summary>
+            <seealso cref="T:Info.Blockchain.API.Models.Address" />
+        </member>
+        <member name="P:Info.Blockchain.API.Models.Xpub.AccountIndex">
+            <summary>
+            Gets or sets the index of the account.
+            </summary>
+            <value>The index of the account.</value>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.Xpub.ChangeIndex">
+            <summary>
+            Gets or sets the index of the change.
+            </summary>
+            <value>The index of the change.</value>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.Xpub.GapLimit">
+            <summary>
+            Gets or sets the gap limit.
+            </summary>
+            <value>The gap limit.</value>
+        </member>
+        <member name="M:Info.Blockchain.API.Models.Xpub.Deserialize(System.String)">
+            <summary>
+            Deserializes the specified xpub json.
+            </summary>
+            <param name="xpubJson">The xpub json.</param>
+            <returns>Info.Blockchain.API.Models.Xpub.</returns>
+        </member>
+        <member name="T:Info.Blockchain.API.Models.XpubGap">
+            <summary>
+            The Xpub gap class.
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.XpubGap.Gap">
+            <summary>
+            Gets the gap.
+            </summary>
+            <value>The gap.</value>
+        </member>
+        <member name="T:Info.Blockchain.API.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="T:Info.Blockchain.API.PushTx.TransactionPusher">
+            <summary>
+            This class reflects the functionality provided at https://blockchain.info/pushtx. It allows
+            users to broadcast hex encoded transactions to the bitcoin network.
+            </summary>
+        </member>
+        <member name="F:Info.Blockchain.API.PushTx.TransactionPusher.httpClient">
+            <summary>
+            The HTTP client
+            </summary>
+        </member>
+        <member name="M:Info.Blockchain.API.PushTx.TransactionPusher.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Info.Blockchain.API.PushTx.TransactionPusher" /> class.
+            </summary>
+        </member>
+        <member name="M:Info.Blockchain.API.PushTx.TransactionPusher.#ctor(Info.Blockchain.API.Client.IHttpClient)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Info.Blockchain.API.PushTx.TransactionPusher" /> class.
+            </summary>
+            <param name="httpClient">The HTTP client.</param>
+        </member>
+        <member name="M:Info.Blockchain.API.PushTx.TransactionPusher.PushTransactionAsync(System.String)">
+            <summary>
+            Pushes a hex encoded transaction to the network.
+            </summary>
+            <param name="transactionString">Hex encoded transaction</param>
+            <exception cref="T:Info.Blockchain.API.Client.ServerApiException">If the server returns an error</exception>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="T:Info.Blockchain.API.Receive.Receive">
+            <summary>
+            The receive class.
+            </summary>
+        </member>
+        <member name="F:Info.Blockchain.API.Receive.Receive.httpClient">
+            <summary>
+            The HTTP client
+            </summary>
+        </member>
+        <member name="M:Info.Blockchain.API.Receive.Receive.#ctor(Info.Blockchain.API.Client.IHttpClient)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Info.Blockchain.API.Receive.Receive" /> class.
+            </summary>
+            <param name="httpClient">The HTTP client.</param>
+        </member>
+        <member name="M:Info.Blockchain.API.Receive.Receive.CheckAddressGapAsync(System.String,System.String)">
+            <summary>
+            Check the index gap between last address paid to and the last address generated using
+            the checkgap endpoint
+            </summary>
+            <param name="xpub">The Xpub to check</param>
+            <param name="key">The blockchain.info receive payments v2 api key</param>
+            <returns>XpubGap object</returns>
+            <exception cref="T:System.ArgumentException"></exception>
+        </member>
+        <member name="M:Info.Blockchain.API.Receive.Receive.GenerateAddressAsync(System.String,System.String,System.String,System.Nullable{System.Int32})">
+            <summary>
+            Generate a new address for an Xpub
+            </summary>
+            <param name="xpub">The Xpub to generate a new address from</param>
+            <param name="callback">The callback URL to be notified when a payment is received</param>
+            <param name="key">The blockchain.info receive payments v2 api key</param>
+            <param name="gapLimit">
+            Optional. How many unused addresses are allowed before erroring out
+            </param>
+            <returns>ReceivePaymentResponse object</returns>
+            <exception cref="T:System.ArgumentException"></exception>
+        </member>
+        <member name="M:Info.Blockchain.API.Receive.Receive.GetCallbackLogsAsync(System.String,System.String)">
+            <summary>
+            Get logs related to callback attempts
+            </summary>
+            <param name="callback">The callback url to check</param>
+            <param name="key">The blockchain.info receive payments v2 api key</param>
+            <returns>Logs related to the callback url supplied</returns>
+            <exception cref="T:System.ArgumentException"></exception>
+        </member>
+        <member name="T:Info.Blockchain.API.Statistics.StatisticsExplorer">
+            <summary>
+            This class allows users to get the bitcoin network statistics.
+            It reflects the functionality documented at https://blockchain.info/api/charts_api
+            </summary>
+        </member>
+        <member name="F:Info.Blockchain.API.Statistics.StatisticsExplorer.httpClient">
+            <summary>
+            The HTTP client
+            </summary>
+        </member>
+        <member name="F:Info.Blockchain.API.Statistics.StatisticsExplorer.disposedValue">
+            <summary>
+            The disposed value
+            </summary>
+        </member>
+        <member name="M:Info.Blockchain.API.Statistics.StatisticsExplorer.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Info.Blockchain.API.Statistics.StatisticsExplorer"/> class.
+            </summary>
+        </member>
+        <member name="M:Info.Blockchain.API.Statistics.StatisticsExplorer.#ctor(Info.Blockchain.API.Client.IHttpClient)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Info.Blockchain.API.Statistics.StatisticsExplorer"/> class.
+            </summary>
+            <param name="httpClient">The HTTP client.</param>
+        </member>
+        <member name="M:Info.Blockchain.API.Statistics.StatisticsExplorer.GetStatsAsync">
+            <summary>
+            Gets the network statistics.
+            </summary>
+            <returns>An instance of the StatisticsResponse class</returns>
+            <exception cref="T:Info.Blockchain.API.Client.ServerApiException">If the server returns an error</exception>
+        </member>
+        <member name="M:Info.Blockchain.API.Statistics.StatisticsExplorer.GetChartAsync(System.String,System.String,System.String)">
+            <summary>
+            Gets chart data for a specified chart
+            </summary>
+            <param name="chartType">Chart name</param>
+            <param name="timespan">Optional timespan to include</param>
+            <param name="rollingAverage">Optional duration over which data should be averaged</param>
+            <returns>Chart response object</returns>
+            <exception cref="T:Info.Blockchain.API.Client.ServerApiException">If the server returns an error</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+        </member>
+        <member name="M:Info.Blockchain.API.Statistics.StatisticsExplorer.GetPoolsAsync(System.Int32)">
+            <summary>
+            Get a dictionary of pool names and the number of blocks
+            mined in the last `timespan` days
+            </summary>
+            <param name="timespan">Number of days to display mined blocks for</param>
+            <returns>A dictionary of pool names and number of blocks mined</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+        </member>
+        <member name="M:Info.Blockchain.API.Statistics.StatisticsExplorer.Dispose(System.Boolean)">
+            <summary>
+            Disposes this instance.
+            </summary>
+            <param name="disposing">The disposing.</param>
+        </member>
+        <member name="M:Info.Blockchain.API.Statistics.StatisticsExplorer.Finalize">
+            <summary>
+            Finalizes this instance.
+            </summary>
+        </member>
+        <member name="M:Info.Blockchain.API.Statistics.StatisticsExplorer.Dispose">
+            <inheritdoc />
+        </member>
+        <member name="T:Info.Blockchain.API.Wallet.Wallet">
+            <summary>
+            This class reflects the functionality documented at
+            https://blockchain.info/api/blockchain_wallet_api. It allows users to interact with their
+            Blockchain.info wallet.
+            </summary>
+        </member>
+        <member name="M:Info.Blockchain.API.Wallet.Wallet.#ctor(Info.Blockchain.API.Client.IHttpClient,System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Info.Blockchain.API.Wallet.Wallet" /> class.
+            </summary>
+            <param name="httpClient">IHttpClient to access Blockchain REST API.</param>
+            <param name="identifier">Wallet identifier (GUID).</param>
+            <param name="password">Decryption password.</param>
+            <param name="secondPassword">Second password.</param>
+        </member>
+        <member name="M:Info.Blockchain.API.Wallet.Wallet.ArchiveAddressAsync(System.String)">
+            <summary>
+            Archives an address.
+            </summary>
+            <param name="address">Address to archive</param>
+            <returns>String representation of the archived address</returns>
+            <exception cref="T:Info.Blockchain.API.Client.ServerApiException">If the server returns an error</exception>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:Info.Blockchain.API.Wallet.Wallet.GetAddressAsync(System.String)">
+            <summary>
+            Retrieves an address from the wallet.
+            </summary>
+            <param name="address">Address in the wallet to look up</param>
+            <returns>An instance of the Address class</returns>
+            <exception cref="T:Info.Blockchain.API.Client.ServerApiException">If the server returns an error</exception>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:Info.Blockchain.API.Wallet.Wallet.GetBalanceAsync">
+            <summary>
+            Fetches the wallet balance. Includes unconfirmed transactions and possibly double spends.
+            </summary>
+            <returns>Wallet balance</returns>
+            <exception cref="T:Info.Blockchain.API.Client.ServerApiException">If the server returns an error</exception>
+        </member>
+        <member name="M:Info.Blockchain.API.Wallet.Wallet.ListAddressesAsync">
+            <summary>
+            Lists all active addresses in the wallet.
+            </summary>
+            <returns>A list of Address objects</returns>
+            <exception cref="T:Info.Blockchain.API.Client.ServerApiException">If the server returns an error</exception>
+        </member>
+        <member name="M:Info.Blockchain.API.Wallet.Wallet.NewAddressAsync(System.String)">
+            <summary>
+            Generates a new address and adds it to the wallet.
+            </summary>
+            <param name="label">Label to attach to this address</param>
+            <returns>An instance of the Address class</returns>
+            <exception cref="T:Info.Blockchain.API.Client.ServerApiException">If the server returns an error</exception>
+        </member>
+        <member name="M:Info.Blockchain.API.Wallet.Wallet.SendAsync(System.String,Info.Blockchain.API.Models.BitcoinValue,System.String,Info.Blockchain.API.Models.BitcoinValue)">
+            <summary>
+            Sends bitcoin from your wallet to a single address.
+            </summary>
+            <param name="toAddress">Recipient bitcoin address</param>
+            <param name="amount">Amount to send</param>
+            <param name="fromAddress">Specific address to send from</param>
+            <param name="fee">Transaction fee. Must be greater than the default fee</param>
+            <returns>An instance of the PaymentResponse class</returns>
+            <exception cref="T:Info.Blockchain.API.Client.ServerApiException">If the server returns an error</exception>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.ArgumentException"></exception>
+        </member>
+        <member name="M:Info.Blockchain.API.Wallet.Wallet.SendManyAsync(System.Collections.Generic.Dictionary{System.String,Info.Blockchain.API.Models.BitcoinValue},System.String,Info.Blockchain.API.Models.BitcoinValue)">
+            <summary>
+            Sends bitcoin from your wallet to multiple addresses.
+            </summary>
+            <param name="recipients">Dictionary with the structure of 'address':amount (string:BitcoinValue)</param>
+            <param name="fromAddress">Specific address to send from</param>
+            <param name="fee">Transaction fee. Must be greater than the default fee</param>
+            <returns>An instance of the PaymentResponse class</returns>
+            <exception cref="T:Info.Blockchain.API.Client.ServerApiException">If the server returns an error</exception>
+            <exception cref="T:System.ArgumentException"></exception>
+        </member>
+        <member name="M:Info.Blockchain.API.Wallet.Wallet.UnarchiveAddressAsync(System.String)">
+            <summary>
+            Unarchives an address.
+            </summary>
+            <param name="address">Address to unarchive</param>
+            <returns>String representation of the unarchived address</returns>
+            <exception cref="T:Info.Blockchain.API.Client.ServerApiException">If the server returns an error</exception>
+            <exception cref="T:System.ArgumentNullException"><paramref name="address" /> is <c>null</c>.</exception>
+        </member>
+        <member name="T:Info.Blockchain.API.Wallet.WalletCreator">
+            <summary>
+            This class reflects the functionality documented at https://blockchain.info/api/create_wallet.
+            </summary>
+        </member>
+        <member name="F:Info.Blockchain.API.Wallet.WalletCreator.httpClient">
+            <summary>
+            The HTTP client
+            </summary>
+        </member>
+        <member name="F:Info.Blockchain.API.Wallet.WalletCreator.disposedValue">
+            <summary>
+            The disposed value
+            </summary>
+        </member>
+        <member name="M:Info.Blockchain.API.Wallet.WalletCreator.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Info.Blockchain.API.Wallet.WalletCreator" /> class.
+            </summary>
+        </member>
+        <member name="M:Info.Blockchain.API.Wallet.WalletCreator.#ctor(Info.Blockchain.API.Client.IHttpClient)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Info.Blockchain.API.Wallet.WalletCreator" /> class.
+            </summary>
+            <param name="httpClient">The HTTP client.</param>
+        </member>
+        <member name="M:Info.Blockchain.API.Wallet.WalletCreator.Finalize">
+            <summary>
+            Finalizes an instance of the <see cref="T:Info.Blockchain.API.Wallet.WalletCreator" /> class.
+            </summary>
+        </member>
+        <member name="M:Info.Blockchain.API.Wallet.WalletCreator.CreateAsync(System.String,System.String,System.String,System.String)">
+            <summary>
+            Creates a new Blockchain.info wallet if the user's API code has the 'generate wallet'
+            permission. It can be created containing a pre-generated private key or will otherwise
+            generate a new private key.
+            </summary>
+            <param name="password">Password for the new wallet. At least 10 characters.</param>
+            <param name="privateKey">Private key to add to the wallet</param>
+            <param name="label">Label for the first address in the wallet</param>
+            <param name="email">Email to associate with the new wallet</param>
+            <returns>An instance of the CreateWalletResponse class</returns>
+            <exception cref="T:Info.Blockchain.API.Client.ServerApiException">If the server returns an error</exception>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:Info.Blockchain.API.Wallet.WalletCreator.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting
+            unmanaged resources.
+            </summary>
+        </member>
+        <member name="M:Info.Blockchain.API.Wallet.WalletCreator.Dispose(System.Boolean)">
+            <summary>
+            Releases unmanaged and - optionally - managed resources.
+            </summary>
+            <param name="disposing">
+            <c>true</c> to release both managed and unmanaged resources; <c>false</c> to release
+            only unmanaged resources.
+            </param>
+        </member>
+    </members>
+</doc>

@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Info.Blockchain.API.Tests.IntegrationTests
 {
-    public class StatisticsTests
+	public class StatisticsTests
 	{
 		[Fact]
 		public async void GetStatistics_Valid()
@@ -16,24 +16,24 @@ namespace Info.Blockchain.API.Tests.IntegrationTests
 			}
 		}
 
-        [Fact]
-        public async void GetChart_Valid()
-        {
-            using (BlockchainApiHelper apiHelper = new BlockchainApiHelper())
-            {
-                var chartResponse = await apiHelper.statisticsExplorer.GetChartAsync("hash-rate");
-                Assert.NotNull(chartResponse);
-            }
-        }
+		[Fact]
+		public async void GetChart_Valid()
+		{
+			using (BlockchainApiHelper apiHelper = new BlockchainApiHelper())
+			{
+				var chartResponse = await apiHelper.statisticsExplorer.GetChartAsync("hash-rate");
+				Assert.NotNull(chartResponse);
+			}
+		}
 
-        [Fact]
-        public async void GetPools_Valid()
-        {
-            using (BlockchainApiHelper apiHelper = new BlockchainApiHelper())
-            {
-                var chartResponse = await apiHelper.statisticsExplorer.GetPoolsAsync();
-                Assert.NotNull(chartResponse);
-            }
-        }
+		[Fact]
+		public async void GetPools_Valid()
+		{
+			using (BlockchainApiHelper apiHelper = new BlockchainApiHelper())
+			{
+				var chartResponse = await apiHelper.statisticsExplorer.GetPoolsAsync();
+				Assert.NotNull(chartResponse);
+			}
+		}
 	}
 }

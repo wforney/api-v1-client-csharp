@@ -6,45 +6,51 @@ using Xunit;
 
 namespace Info.Blockchain.API.Tests.IntegrationTests
 {
+	/// <summary>
+	/// The TransactionTests class.
+	/// </summary>
 	public class TransactionTests
 	{
+		/// <summary>
+		/// Defines the test method GetTransaction_ByHash_Valid.
+		/// </summary>
 		[Fact(Skip = "Test freezes because of comparison tool")]
 		public async void GetTransaction_ByHash_Valid()
 		{
-			using (BlockchainApiHelper apiHelper = new BlockchainApiHelper())
-			{
-				Transaction knownTransaction = ReflectionUtil.DeserializeFile<Transaction>("single_transaction");
-				Transaction receivedTransaction = await apiHelper.blockExplorer.GetTransactionByHashAsync(knownTransaction.Hash);
+			using var apiHelper = new BlockchainApiHelper();
+			var knownTransaction = ReflectionUtil.DeserializeFile<Transaction>("single_transaction");
+			var receivedTransaction = await apiHelper.blockExplorer.GetTransactionByHashAsync(knownTransaction.Hash).ConfigureAwait(false);
 
-				CompareLogic compareLogic = new CompareLogic();
-				ComparisonResult comparisonResult = compareLogic.Compare(knownTransaction, receivedTransaction);
-				Assert.True(comparisonResult.AreEqual);
-			}
+			var compareLogic = new CompareLogic();
+			var comparisonResult = compareLogic.Compare(knownTransaction, receivedTransaction);
+			Assert.True(comparisonResult.AreEqual);
 		}
 
+		/// <summary>
+		/// Defines the test method GetTransaction_ByIndex_Valid.
+		/// </summary>
 		[Fact(Skip = "Test freezes because of comparison tool")]
 		public async void GetTransaction_ByIndex_Valid()
 		{
-			using (BlockchainApiHelper apiHelper = new BlockchainApiHelper())
-			{
-				Transaction knownTransaction = ReflectionUtil.DeserializeFile<Transaction>("single_transaction");
-				Transaction receivedTransaction = await apiHelper.blockExplorer.GetTransactionByIndexAsync(knownTransaction.Index);
+			using var apiHelper = new BlockchainApiHelper();
+			var knownTransaction = ReflectionUtil.DeserializeFile<Transaction>("single_transaction");
+			var receivedTransaction = await apiHelper.blockExplorer.GetTransactionByIndexAsync(knownTransaction.Index).ConfigureAwait(false);
 
-				CompareLogic compareLogic = new CompareLogic();
-				ComparisonResult comparisonResult = compareLogic.Compare(knownTransaction, receivedTransaction);
-				Assert.True(comparisonResult.AreEqual);
-			}
+			var compareLogic = new CompareLogic();
+			var comparisonResult = compareLogic.Compare(knownTransaction, receivedTransaction);
+			Assert.True(comparisonResult.AreEqual);
 		}
 
+		/// <summary>
+		/// Defines the test method GetUnconfirmedTransaction_Valid.
+		/// </summary>
 		[Fact]
 		public async void GetUnconfirmedTransaction_Valid()
 		{
-			using (BlockchainApiHelper apiHelper = new BlockchainApiHelper())
-			{
-				ReadOnlyCollection<Transaction> unconfirmedTransactions = await apiHelper.blockExplorer.GetUnconfirmedTransactionsAsync();
+			using var apiHelper = new BlockchainApiHelper();
+			var unconfirmedTransactions = await apiHelper.blockExplorer.GetUnconfirmedTransactionsAsync().ConfigureAwait(false);
 
-				Assert.NotNull(unconfirmedTransactions);
-			}
+			Assert.NotNull(unconfirmedTransactions);
 		}
 	}
 }

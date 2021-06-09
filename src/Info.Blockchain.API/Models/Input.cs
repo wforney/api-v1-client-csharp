@@ -1,16 +1,20 @@
-﻿using Newtonsoft.Json;
-// ReSharper disable UnusedAutoPropertyAccessor.Local
-
-namespace Info.Blockchain.API.Models
+﻿namespace Info.Blockchain.API.Models
 {
+	using Newtonsoft.Json;
+
+	using System.ComponentModel.DataAnnotations;
+
 	/// <summary>
-	/// Represents a transaction input. If the PreviousOutput object is null,
-	/// this is a coinbase input.
+	/// Represents a transaction input. If the PreviousOutput object is null, this is a coinbase input.
 	/// </summary>
-	public class Input
+	public sealed class Input
 	{
+		/// <summary>
+		/// Prevents a default instance of the <see cref="Input" /> class from being created.
+		/// </summary>
 		[JsonConstructor]
-		private Input()
+		[System.Text.Json.Serialization.JsonConstructor]
+		public Input()
 		{
 		}
 
@@ -18,18 +22,23 @@ namespace Info.Blockchain.API.Models
 		/// Previous output. If null, this is a coinbase input.
 		/// </summary>
 		[JsonProperty("prev_out")]
-		public Output PreviousOutput { get; private set; }
-
-		/// <summary>
-		/// Sequence number of the input
-		/// </summary>
-		[JsonProperty("sequence", Required = Required.Always)]
-		public long Sequence { get; private set; }
+		[System.Text.Json.Serialization.JsonPropertyName("prev_out")]
+		public Output? PreviousOutput { get; init; }
 
 		/// <summary>
 		/// Script signature
 		/// </summary>
 		[JsonProperty("script", Required = Required.Always)]
-		public string ScriptSignature { get; private set; }
+		[Required]
+		[System.Text.Json.Serialization.JsonPropertyName("script")]
+		public string ScriptSignature { get; init; } = string.Empty;
+
+		/// <summary>
+		/// Sequence number of the input
+		/// </summary>
+		[JsonProperty("sequence", Required = Required.Always)]
+		[Required]
+		[System.Text.Json.Serialization.JsonPropertyName("sequence")]
+		public long Sequence { get; init; }
 	}
 }

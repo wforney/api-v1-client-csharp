@@ -1,28 +1,44 @@
-using Newtonsoft.Json;
-
-namespace Info.Blockchain.API.Models
+﻿namespace Info.Blockchain.API.Models
 {
-    public class CreateWalletResponse
-	{
-		[JsonConstructor]
-		public CreateWalletResponse() {}
+	using Newtonsoft.Json;
 
+	using System.ComponentModel.DataAnnotations;
+
+	/// <summary>
+	/// The create wallet response class.
+	/// </summary>
+	public class CreateWalletResponse
+	{
 		/// <summary>
-		/// Wallet identifier (GUID)
+		/// Initializes a new instance of the <see cref="CreateWalletResponse" /> class.
 		/// </summary>
-		[JsonProperty("guid", Required = Required.Always)]
-		public string Identifier { get; private set; }
+		[JsonConstructor]
+		[System.Text.Json.Serialization.JsonConstructor]
+		public CreateWalletResponse()
+		{
+		}
 
 		/// <summary>
 		/// First address in the wallet
 		/// </summary>
 		[JsonProperty("address", Required = Required.Always)]
-		public string Address { get; private set; }
+		[Required]
+		[System.Text.Json.Serialization.JsonPropertyName("address")]
+		public string Address { get; init; } = string.Empty;
+
+		/// <summary>
+		/// Wallet identifier (GUID)
+		/// </summary>
+		[JsonProperty("guid", Required = Required.Always)]
+		[Required]
+		[System.Text.Json.Serialization.JsonPropertyName("guid")]
+		public string Identifier { get; init; } = string.Empty;
 
 		/// <summary>
 		/// Optional label
 		/// </summary>
 		[JsonProperty("label")]
-		public string Label { get; private set; }
+		[System.Text.Json.Serialization.JsonPropertyName("label")]
+		public string? Label { get; init; }
 	}
 }

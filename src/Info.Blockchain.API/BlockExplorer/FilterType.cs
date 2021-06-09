@@ -1,9 +1,23 @@
-namespace Info.Blockchain.API.BlockExplorer
+﻿namespace Info.Blockchain.API.BlockExplorer
 {
-    public enum FilterType
-    {
-        All = 4,
-        ConfirmedOnly,
-        RemoveUnspendable
-    }
+	/// <summary>
+	/// The filter type enumeration.
+	/// </summary>
+	public enum FilterType
+	{
+		/// <summary>
+		/// All
+		/// </summary>
+		All = 4,
+
+		/// <summary>
+		/// The confirmed only
+		/// </summary>
+		ConfirmedOnly,
+
+		/// <summary>
+		/// The remove unspendable
+		/// </summary>
+		RemoveUnspendable
+	}
 }

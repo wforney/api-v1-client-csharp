@@ -1,53 +1,72 @@
-﻿using Newtonsoft.Json;
-using Info.Blockchain.API.Json;
-
-namespace Info.Blockchain.API.Models
+﻿namespace Info.Blockchain.API.Models
 {
+	using Info.Blockchain.API.Json;
+
+	using Newtonsoft.Json;
+
+	using System.ComponentModel.DataAnnotations;
+
 	/// <summary>
 	/// Represents a transaction output.
 	/// </summary>
-	public class Output
+	public sealed class Output
 	{
+		/// <summary>
+		/// Prevents a default instance of the <see cref="Output" /> class from being created.
+		/// </summary>
 		[JsonConstructor]
-		private Output()
+		[System.Text.Json.Serialization.JsonConstructor]
+		public Output()
 		{
 		}
-
-		/// <summary>
-		/// Index of the output in a transaction
-		/// </summary>
-		[JsonProperty("n", Required = Required.Always)]
-		public int N { get; private set; }
-
-		/// <summary>
-		/// Value of the output
-		/// </summary>
-		[JsonProperty("value", Required = Required.Always)]
-		[JsonConverter(typeof(BitcoinValueJsonConverter))]
-		public BitcoinValue Value { get; private set; }
 
 		/// <summary>
 		/// Address that the output belongs to
 		/// </summary>
 		[JsonProperty("addr")]
-		public string Address { get; private set; }
+		[System.Text.Json.Serialization.JsonPropertyName("addr")]
+		public string Address { get; init; } = string.Empty;
 
 		/// <summary>
-		/// Transaction index
+		/// Index of the output in a transaction
 		/// </summary>
-		[JsonProperty("tx_index", Required = Required.Always)]
-		public long TxIndex { get; private set; }
+		[JsonProperty("n", Required = Required.Always)]
+		[Required]
+		[System.Text.Json.Serialization.JsonPropertyName("n")]
+		public int N { get; init; }
 
 		/// <summary>
 		/// Output script
 		/// </summary>
 		[JsonProperty("script", Required = Required.Always)]
-		public string Script { get; private set; }
+		[Required]
+		[System.Text.Json.Serialization.JsonPropertyName("script")]
+		public string Script { get; init; } = string.Empty;
 
 		/// <summary>
 		/// Whether the output is spent
 		/// </summary>
 		[JsonProperty("spent", Required = Required.Always)]
-		public bool Spent { get; private set; }
+		[Required]
+		[System.Text.Json.Serialization.JsonPropertyName("spent")]
+		public bool Spent { get; init; }
+
+		/// <summary>
+		/// Transaction index
+		/// </summary>
+		[JsonProperty("tx_index", Required = Required.Always)]
+		[Required]
+		[System.Text.Json.Serialization.JsonPropertyName("tx_index")]
+		public long TxIndex { get; init; }
+
+		/// <summary>
+		/// Value of the output
+		/// </summary>
+		[JsonConverter(typeof(BitcoinValueJsonConverter))]
+		[JsonProperty("value", Required = Required.Always)]
+		[Required]
+		[System.Text.Json.Serialization.JsonConverter(typeof(NativeBitcoinValueJsonConverter))]
+		[System.Text.Json.Serialization.JsonPropertyName("value")]
+		public BitcoinValue Value { get; init; } = new(0);
 	}
 }

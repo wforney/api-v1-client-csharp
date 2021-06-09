@@ -1,10 +1,18 @@
-using Newtonsoft.Json;
-
-namespace Info.Blockchain.API.Models
+﻿namespace Info.Blockchain.API.Models
 {
-    public class XpubGap
-    {
-        [JsonProperty("gap")]
-        public int Gap { get; private set; }
-    }
+	using Newtonsoft.Json;
+
+	/// <summary>
+	/// The Xpub gap class.
+	/// </summary>
+	public class XpubGap
+	{
+		/// <summary>
+		/// Gets the gap.
+		/// </summary>
+		/// <value>The gap.</value>
+		[JsonProperty("gap")]
+		[System.Text.Json.Serialization.JsonPropertyName("gap")]
+		public int Gap { get; init; }
+	}
 }

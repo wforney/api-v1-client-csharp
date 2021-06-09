@@ -86,56 +86,56 @@ namespace Info.Blockchain.API.Tests.UnitTests
 			});
 		}
 
-        [Fact]
-        public async void GetAddress_BadParameters_ArgumentException()
-        {
-            await Assert.ThrowsAsync<ArgumentNullException>(async () =>
-            {
-                using (BlockchainApiHelper apiHelper = UnitTestUtil.GetFakeHelper())
-                {
-                    await apiHelper.blockExplorer.GetBase58AddressAsync("");
-                }
-            });
+		[Fact]
+		public async void GetAddress_BadParameters_ArgumentException()
+		{
+			await Assert.ThrowsAsync<ArgumentNullException>(async () =>
+			{
+				using (BlockchainApiHelper apiHelper = UnitTestUtil.GetFakeHelper())
+				{
+					await apiHelper.blockExplorer.GetBase58AddressAsync("");
+				}
+			});
 
-            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () =>
-            {
-                using (BlockchainApiHelper apiHelper = UnitTestUtil.GetFakeHelper())
-                {
-                    await apiHelper.blockExplorer.GetBase58AddressAsync("some-address", 60);
-                }
-            });
+			await Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () =>
+			{
+				using (BlockchainApiHelper apiHelper = UnitTestUtil.GetFakeHelper())
+				{
+					await apiHelper.blockExplorer.GetBase58AddressAsync("some-address", 60);
+				}
+			});
 
-            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () =>
-            {
-                using (BlockchainApiHelper apiHelper = UnitTestUtil.GetFakeHelper())
-                {
-                    await apiHelper.blockExplorer.GetBase58AddressAsync("some-address", offset: -1);
-                }
-            });
+			await Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () =>
+			{
+				using (BlockchainApiHelper apiHelper = UnitTestUtil.GetFakeHelper())
+				{
+					await apiHelper.blockExplorer.GetBase58AddressAsync("some-address", offset: -1);
+				}
+			});
 
-            await Assert.ThrowsAsync<ArgumentNullException>(async () =>
-            {
-                using (BlockchainApiHelper apiHelper = UnitTestUtil.GetFakeHelper())
-                {
-                    await apiHelper.blockExplorer.GetMultiAddressAsync(new List<string>());
-                }
-            });
+			await Assert.ThrowsAsync<ArgumentNullException>(async () =>
+			{
+				using (BlockchainApiHelper apiHelper = UnitTestUtil.GetFakeHelper())
+				{
+					await apiHelper.blockExplorer.GetMultiAddressAsync(new List<string>());
+				}
+			});
 
-            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () =>
-            {
-                using (BlockchainApiHelper apiHelper = UnitTestUtil.GetFakeHelper())
-                {
-                    await apiHelper.blockExplorer.GetMultiAddressAsync(new List<string>() {"address"}, offset: -1);
-                }
-            });
+			await Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () =>
+			{
+				using (BlockchainApiHelper apiHelper = UnitTestUtil.GetFakeHelper())
+				{
+					await apiHelper.blockExplorer.GetMultiAddressAsync(new List<string>() {"address"}, offset: -1);
+				}
+			});
 
-            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () =>
-            {
-                using (BlockchainApiHelper apiHelper = UnitTestUtil.GetFakeHelper())
-                {
-                    await apiHelper.blockExplorer.GetMultiAddressAsync(new List<string>() {"address"}, 60);
-                }
-            });
-        }
+			await Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () =>
+			{
+				using (BlockchainApiHelper apiHelper = UnitTestUtil.GetFakeHelper())
+				{
+					await apiHelper.blockExplorer.GetMultiAddressAsync(new List<string>() { "address" }, 160); // rule is > 100, not 50, for multiaddress scenario.
+				}
+			});
+		}
 	}
 }

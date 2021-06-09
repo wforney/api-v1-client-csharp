@@ -1,22 +1,28 @@
-using Newtonsoft.Json;
-
-namespace Info.Blockchain.API.Models
+﻿namespace Info.Blockchain.API.Models
 {
-    /// <summary>
-    /// A class representing a single chart value
-    /// </summary>
-    public class ChartValue
-    {
-        /// <summary>
+	using Newtonsoft.Json;
+
+	using System.ComponentModel.DataAnnotations;
+
+	/// <summary>
+	/// A class representing a single chart value
+	/// </summary>
+	public class ChartValue
+	{
+		/// <summary>
 		/// X Value
 		/// </summary>
 		[JsonProperty("x", Required = Required.Always)]
-		public double X { get; private set; }
+		[Required]
+		[System.Text.Json.Serialization.JsonPropertyName("x")]
+		public double X { get; init; }
 
-        /// <summary>
+		/// <summary>
 		/// Y Value
 		/// </summary>
 		[JsonProperty("y", Required = Required.Always)]
-		public double Y { get; private set; }
-    }
+		[Required]
+		[System.Text.Json.Serialization.JsonPropertyName("y")]
+		public double Y { get; init; }
+	}
 }

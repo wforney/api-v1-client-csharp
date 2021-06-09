@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
-using Info.Blockchain.API.Client;
-using Info.Blockchain.API.Models;
-using Xunit;
-
-namespace Info.Blockchain.API.Tests.IntegrationTests
+﻿namespace Info.Blockchain.API.Tests.IntegrationTests
 {
+	using System.Collections.Generic;
+
+	using Info.Blockchain.API.Client;
+	using Info.Blockchain.API.Models;
+
+	using Xunit;
+
 	public class CurrencyTests
 	{
 		[Fact]
@@ -12,9 +14,9 @@ namespace Info.Blockchain.API.Tests.IntegrationTests
 		{
 			using (BlockchainApiHelper apiHelper = new BlockchainApiHelper())
 			{
-				Dictionary<string, Currency> currencies = await apiHelper.exchangeRateExplorer.GetTickerAsync();
+				var currencies = await apiHelper.exchangeRateExplorer.GetTickerAsync().ConfigureAwait(false);
 				Assert.NotNull(currencies);
-				Assert.True(currencies.Count > 0);
+				Assert.True(currencies?.Count > 0);
 			}
 		}
 
@@ -23,31 +25,31 @@ namespace Info.Blockchain.API.Tests.IntegrationTests
 		{
 			using (BlockchainApiHelper apiHelper = new BlockchainApiHelper())
 			{
-				double btcValue = await apiHelper.exchangeRateExplorer.ToBtcAsync("USD", 1000);
+				double btcValue = await apiHelper.exchangeRateExplorer.ToBtcAsync("USD", 1000).ConfigureAwait(false);
 				Assert.True(btcValue > 0);
 			}
 		}
 
-        [Fact]
-        public async void FromBtc_ToUs_HasValue()
-        {
-            using (BlockchainApiHelper apiHelper = new BlockchainApiHelper())
+		[Fact]
+		public async void FromBtc_ToUs_HasValue()
+		{
+			using (BlockchainApiHelper apiHelper = new BlockchainApiHelper())
 			{
-                var btc = new BitcoinValue(new decimal(0.4));
-				double btcValue = await apiHelper.exchangeRateExplorer.FromBtcAsync(btc);
+				var btc = new BitcoinValue(new decimal(0.4));
+				double btcValue = await apiHelper.exchangeRateExplorer.FromBtcAsync(btc).ConfigureAwait(false);
 				Assert.True(btcValue > 0);
 			}
-        }
+		}
 
-        [Fact]
-        public async void FromBtc_ToGbp_HasValue()
-        {
-            using (BlockchainApiHelper apiHelper = new BlockchainApiHelper())
+		[Fact]
+		public async void FromBtc_ToGbp_HasValue()
+		{
+			using (BlockchainApiHelper apiHelper = new BlockchainApiHelper())
 			{
-                var btc = new BitcoinValue(new decimal(0.4));
-				double btcValue = await apiHelper.exchangeRateExplorer.FromBtcAsync(btc, "GBP");
+				var btc = new BitcoinValue(new decimal(0.4));
+				double btcValue = await apiHelper.exchangeRateExplorer.FromBtcAsync(btc, "GBP").ConfigureAwait(false);
 				Assert.True(btcValue > 0);
 			}
-        }
+		}
 	}
 }

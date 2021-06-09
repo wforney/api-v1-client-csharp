@@ -1,39 +1,27 @@
-﻿using System;
-using Info.Blockchain.API.Models;
-using Newtonsoft.Json;
-
-namespace Info.Blockchain.API.Json
+﻿namespace Info.Blockchain.API.Json
 {
+	using Info.Blockchain.API.Models;
+
+	using Newtonsoft.Json;
+
+	using System;
+	using System.Globalization;
+
+	/// <summary>
+	/// The bitcoin value JSON converter class. Implements the <see cref="JsonConverter" />.
+	/// </summary>
+	/// <seealso cref="JsonConverter" />
 	internal class BitcoinValueJsonConverter : JsonConverter
 	{
-		public override bool CanConvert(Type objectType)
-		{
-			return objectType == typeof(BitcoinValue);
-		}
+		/// <inheritdoc />
+		public override bool CanConvert(Type objectType) => objectType == typeof(BitcoinValue);
 
-		public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
-		{
-			if (reader.Value is long)
-			{
-				long satoshis = (long)reader.Value;
-				BitcoinValue bitcoinValue = BitcoinValue.FromSatoshis(satoshis);
-				return bitcoinValue;
-			}
-			return BitcoinValue.Zero;
-		}
+		/// <inheritdoc />
+		public override object ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer) =>
+			reader.Value is long satoshis ? BitcoinValue.FromSatoshis(satoshis) : BitcoinValue.Zero;
 
-		public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-		{
-			string satoshis;
-			if (value is BitcoinValue)
-			{
-				satoshis = ((BitcoinValue)value).Satoshis.ToString();
-			}
-			else
-			{
-				satoshis = "0";
-			}
-			writer.WriteRawValue(satoshis);
-		}
+		/// <inheritdoc />
+		public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer) =>
+			writer.WriteRawValue(value is BitcoinValue bitcoinValue ? bitcoinValue.Satoshis.ToString(CultureInfo.CurrentCulture) : "0");
 	}
 }
