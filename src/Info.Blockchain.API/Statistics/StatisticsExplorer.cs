@@ -26,7 +26,7 @@
 		/// <summary>
 		/// Initializes a new instance of the <see cref="StatisticsExplorer"/> class.
 		/// </summary>
-		public StatisticsExplorer() => this.httpClient = new BlockchainHttpClient("https://api.blockchain.info");
+		public StatisticsExplorer() => this.httpClient = new BlockchainHttpClient(uri: "https://api.blockchain.info");
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="StatisticsExplorer"/> class.
@@ -76,6 +76,11 @@
 			catch (Exception ex)
 			{
 				if (ex.Message.Contains("No chart with this name"))
+				{
+					throw new ArgumentOutOfRangeException(nameof(chartType), "This chart name does not exist");
+				}
+
+				if (ex.Message.Contains("Not Found"))
 				{
 					throw new ArgumentOutOfRangeException(nameof(chartType), "This chart name does not exist");
 				}

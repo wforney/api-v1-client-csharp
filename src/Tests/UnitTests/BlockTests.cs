@@ -101,7 +101,7 @@ namespace Info.Blockchain.API.Tests.UnitTests
 			{
 				using (BlockchainApiHelper apiHelper = UnitTestUtil.GetFakeHelper())
 				{
-					await apiHelper.blockExplorer.GetBase58AddressAsync("some-address", 60);
+					await apiHelper.blockExplorer.GetBase58AddressAsync("some-address", BlockExplorer.BlockExplorer.MaxTransactionsPerRequest + 1);
 				}
 			});
 
@@ -133,7 +133,7 @@ namespace Info.Blockchain.API.Tests.UnitTests
 			{
 				using (BlockchainApiHelper apiHelper = UnitTestUtil.GetFakeHelper())
 				{
-					await apiHelper.blockExplorer.GetMultiAddressAsync(new List<string>() { "address" }, 160); // rule is > 100, not 50, for multiaddress scenario.
+					await apiHelper.blockExplorer.GetMultiAddressAsync(new List<string>() { "address" }, BlockExplorer.BlockExplorer.MaxTransactionsPerMultiRequest + 1);
 				}
 			});
 		}

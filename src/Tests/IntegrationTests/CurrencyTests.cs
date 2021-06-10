@@ -1,14 +1,19 @@
 ﻿namespace Info.Blockchain.API.Tests.IntegrationTests
 {
-	using System.Collections.Generic;
-
 	using Info.Blockchain.API.Client;
 	using Info.Blockchain.API.Models;
+
+	using System.Globalization;
 
 	using Xunit;
 
 	public class CurrencyTests
 	{
+		public CurrencyTests()
+		{
+			CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-US");
+		}
+
 		[Fact]
 		public async void GetTicker_Valid()
 		{

@@ -21,7 +21,7 @@
 		/// Initializes a new instance of the <see cref="Receive" /> class.
 		/// </summary>
 		/// <param name="httpClient">The HTTP client.</param>
-		public Receive(IHttpClient? httpClient = null) => this.httpClient = httpClient ?? new BlockchainHttpClient("https://api.blockchain.info/v2");
+		public Receive(IHttpClient? httpClient = null) => this.httpClient = httpClient ?? new BlockchainHttpClient(uri: "https://api.blockchain.info/v2");
 
 		/// <summary>
 		/// Check the index gap between last address paid to and the last address generated using

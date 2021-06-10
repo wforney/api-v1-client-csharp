@@ -95,7 +95,7 @@
 			this.blockExplorer = new BlockExplorer.BlockExplorer(baseHttpClient);
 			this.transactionBroadcaster = new TransactionPusher(baseHttpClient);
 			this.exchangeRateExplorer = new ExchangeRateExplorer(baseHttpClient);
-			this.statisticsExplorer = new StatisticsExplorer(new BlockchainHttpClient("https://api.blockchain.info"));
+			this.statisticsExplorer = new StatisticsExplorer(new BlockchainHttpClient(uri: "https://api.blockchain.info"));
 
 			this.walletCreator = serviceHttpClient is null ? null : new WalletCreator(serviceHttpClient);
 		}

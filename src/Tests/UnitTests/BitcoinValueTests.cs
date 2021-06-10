@@ -1,10 +1,18 @@
-﻿using Info.Blockchain.API.Models;
-using Xunit;
-
-namespace Info.Blockchain.API.Tests.UnitTests
+﻿namespace Info.Blockchain.API.Tests.UnitTests
 {
-    public class BitcoinValueTests
+	using Info.Blockchain.API.Models;
+
+	using System.Globalization;
+
+	using Xunit;
+
+	public class BitcoinValueTests
 	{
+		public BitcoinValueTests()
+		{
+			CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-US");
+		}
+
 		[Fact]
 		public void BitcoinValue_ConvertSatoshis_ValidConversion()
 		{
