@@ -905,6 +905,82 @@
             List of transactions associated with this address
             </summary>
         </member>
+        <member name="T:Info.Blockchain.API.Models.BalanceUpdateRequest">
+            <summary>
+            The balance update request class.
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.BalanceUpdateRequest.Address">
+            <summary>
+            Gets or sets the address.
+            </summary>
+            <value>The address.</value>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.BalanceUpdateRequest.Callback">
+            <summary>
+            Gets or sets the callback.
+            </summary>
+            <value>The callback.</value>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.BalanceUpdateRequest.Confirmations">
+            <summary>
+            Gets or sets the confirmations.
+            </summary>
+            <value>The confirmations.</value>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.BalanceUpdateRequest.key">
+            <summary>
+            Gets or sets the key.
+            </summary>
+            <value>The key.</value>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.BalanceUpdateRequest.Notification">
+            <summary>
+            Gets or sets the notification.
+            </summary>
+            <value>The notification.</value>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.BalanceUpdateRequest.OperationType">
+            <summary>
+            Gets or sets the type of the operation.
+            </summary>
+            <value>The type of the operation.</value>
+        </member>
+        <member name="T:Info.Blockchain.API.Models.BalanceUpdateResponse">
+            <summary>
+            The balance update response class.
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.BalanceUpdateResponse.Address">
+            <summary>
+            The address you will like to monitor
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.BalanceUpdateResponse.Callback">
+            <summary>
+            The callback URL to be notified when payment is made
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.BalanceUpdateResponse.Confirmations">
+            <summary>
+            The number of confirmations the transaction needs to have before a notification is sent.
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.BalanceUpdateResponse.id">
+            <summary>
+            The id in the response can be used to delete
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.BalanceUpdateResponse.Notification">
+            <summary>
+            The request notification behaviour ('KEEP' | 'DELETE).
+            </summary>
+        </member>
+        <member name="P:Info.Blockchain.API.Models.BalanceUpdateResponse.OperationType">
+            <summary>
+            The operation type you would like to receive notifications for ('SPEND' | 'RECEIVE' | 'ALL').
+            </summary>
+        </member>
         <member name="T:Info.Blockchain.API.Models.BitcoinValue">
             <summary>
             The bitcoin value class. Implements the <see cref="T:System.IEquatable`1" />.
@@ -1824,6 +1900,39 @@
             <param name="transactionString">Hex encoded transaction</param>
             <exception cref="T:Info.Blockchain.API.Client.ServerApiException">If the server returns an error</exception>
             <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="T:Info.Blockchain.API.Receive.BalanceUpdate">
+            <summary>
+            The balance update class.
+            </summary>
+        </member>
+        <member name="F:Info.Blockchain.API.Receive.BalanceUpdate.httpClient">
+            <summary>
+            The HTTP client
+            </summary>
+        </member>
+        <member name="M:Info.Blockchain.API.Receive.BalanceUpdate.#ctor(Info.Blockchain.API.Client.IHttpClient)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Info.Blockchain.API.Receive.BalanceUpdate" /> class.
+            </summary>
+            <param name="httpClient">The HTTP client.</param>
+        </member>
+        <member name="M:Info.Blockchain.API.Receive.BalanceUpdate.Subscribe(System.String,System.String,System.String,System.String,System.String,System.Int32)">
+            <summary>
+            Subscribe to balance update notification whenever a transaction occur on the address
+            </summary>
+            <param name="key">Your blockchain.info receive payments v2 api key</param>
+            <param name="address">The address you will like to monitor</param>
+            <param name="callback">The callback URL to be notified when payment is made</param>
+            <param name="notification">The request notification behaviour ('KEEP' | 'DELETE).</param>
+            <param name="operationType">
+            The operation type you would like to receive notifications for ('SPEND' | 'RECEIVE' | 'ALL').
+            </param>
+            <param name="confirmations">
+            The number of confirmations the transaction needs to have before a notification is sent.
+            </param>
+            <returns>The balance update response.</returns>
+            <exception cref="T:System.ArgumentException"></exception>
         </member>
         <member name="T:Info.Blockchain.API.Receive.Receive">
             <summary>
